@@ -407,8 +407,8 @@ select {
 
 #wrap {
 	margin: 0 auto 0 auto;
-	width: 25%;
-	min-width: 250px;
+	width: 30%;
+	min-width: 300px;
 }
 
 
@@ -419,4 +419,9 @@ select {
 
 .dropdown-menu{
 	background-color: #1e4d04;
+	font-size: 0.8rem;
+}
+
+.dropdown-item a {
+	font-size: 5px;
 }

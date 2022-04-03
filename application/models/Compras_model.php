@@ -182,16 +182,10 @@ class Compras_model extends CI_Model {
         }
 	}
 
-	/*
-	SELECT `idcompras_binario` FROM `compras_binario`
-join (SELECT MAX(`fecha`) as max_fecha from `compras_binario`) m ON m.max_fecha = `compras_binario`.`fecha`
-       WHERE `idcodigo_socio_binario` = 9
-	*/
-
-	function _obten_paquetes($matriz){
-		//Cambiar el tema de los paquetes cuando se ponga el nuevo plan de compensacion
+	function _get_paquetes(){
+		
 		$this->db->select('*');
-		$this->db->where('idmatrices', $matriz);
+		$this->db->where('idmatrices', 1);
 		$this->db->order_by('paquete', 'ASC');
 		$q = $this->db->get('paquetes');
 		if ($q->num_rows() > 0) {
@@ -227,29 +221,27 @@ join (SELECT MAX(`fecha`) as max_fecha from `compras_binario`) m ON m.max_fecha 
 	}
 
 	/**
-	 * undocumented function
+	 * Graba la compra de producto por un código
 	 *
 	 * @return void
-	 * @author
+	 * @author Pablo Orejuela
 	 **/
-	function _graba_compra($data){
+	function _set_compra($data){
             /*
             *	Se usa en las nuevas matrices
             */
 
-            $fecha_compra = date('Y-m-d');
-
             $this->db->trans_start();
-            $this->db->set('idcod_socio', $data['idcod_socio']);
-            $this->db->set('fecha', $fecha_compra);
-            $this->db->set('recompra', 1);
+            $this->db->set('id', $data['id']);
+            $this->db->set('fecha', date('Y-m-d'));
+			$this->db->set('idpaquete', $data['idpaquete']);
             $this->db->insert('compras');
             $this->db->trans_complete();
             if ($this->db->trans_status() == FALSE) {
                 $this->db->trans_rollback();
                 return 0;
             } else {
-        	return 1;
+        		return 1;
             }
 	}
 

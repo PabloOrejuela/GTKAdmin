@@ -28,6 +28,7 @@ class Compras extends CI_Controller {
         $this->load->model('acl_model');
         $this->load->model('administracion_model');
         $this->load->model('compras_model');
+		$this->load->model('socios_model');
     }
 
 	/**
@@ -104,7 +105,7 @@ class Compras extends CI_Controller {
             $data['cedula']=$this->input->post('cedula');
             $data['datos'] = $this->compras_model->_get_datos_usuario_binario($data['cedula']);
             $data['codigos'] = $this->compras_model->_get_codigos_usuario_binario($data['cedula']);
-            $data['paquetes'] = $this->compras_model->_obten_paquetes(2);
+            $data['paquetes'] = $this->compras_model->_get_paquetes();
 
             $data['version'] = $this->config->item('system_version');
             $data['title']='GTK Admin';
@@ -134,25 +135,56 @@ class Compras extends CI_Controller {
         }
     }
 
-    function graba_compras(){
+	/**
+	 *
+	 * Formulario de compra de producto
+	 *
+	 * @param Type $var Description
+	 * @return type form
+	 * @throws conditon
+	 **/
+	public function comprar_producto($mensaje = ''){
+		$rol =$this->session->userdata('rol');
+        $data['per'] = $this->acl_model->_extraePermisos($rol);
+        $is_logged = $this->session->userdata('is_logged_in');
+        if (isset($is_logged) == true || isset($is_logged) == 1) {
+
+			$data['paquetes'] = $this->compras_model->_get_paquetes();
+			$data['socio'] = $this->socios_model->_get_socio_by_id($this->session->userdata('id'));
+			$data['mensaje'] = $mensaje;
+            $data['title']='GTK Admin';
+            $data['main_content']='compras/frm_compra';
+            $this->load->view('includes/template', $data);
+        }
+        else{
+            $this->index();
+        }
+	}
+
+    function graba_compra(){
         $rol =$this->session->userdata('rol');
         $data['per'] = $this->acl_model->_extraePermisos($rol);
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
 
-            $data['idcod_socio'] = $this->input->post('idsocio');
+            $data['idsocio'] = $this->input->post('idsocio');
             $data['idpaquete'] = $this->input->post('idpaquete');
+			$data['id'] = $this->input->post('id');
 
-            if ($data['idpaquete'] > 0) {
-                $r = $this->compras_model->_graba_compra($data);
+            if ($data['idpaquete'] != 0) {
+                $r = $this->compras_model->_set_compra($data);
                 if ($r != 0) {
                     $data['version'] = $this->config->item('system_version');
                     $data['title']='GTK Admin';
-                    $data['main_content']='exito';
+                    $data['main_content']='exito/exito';
                     $this->load->view('includes/template', $data);
-                }
+                }else{
+					$mensaje = "No se pudo realizar la compra, por favor contacte al administrador del sistema";
+                	$this->comprar_producto($mensaje);
+				}
             }else{
-                $this->recompras();
+				$mensaje = "";
+                $this->comprar_producto($mensaje);
             }
         }
         else{

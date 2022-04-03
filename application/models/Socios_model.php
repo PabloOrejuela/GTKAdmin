@@ -84,27 +84,30 @@ class Socios_model extends CI_Model {
     }
 
 
-	function _get_socios($estado = "A"){
-		$this->db->select('*');
+	function _get_socios_activos(){
+		$r = NULL;
+		$this->db->select('MAX(compras.id) as id,socios.idsocio as idsocio,codigo_socio,cedula,apellidos,nombres,celular,fecha_inscripcion,paquete');
 		$this->db->join('ciudad', 'ciudad.idciudad = socios.idciudad');
+		$this->db->join('codigo_socio', 'codigo_socio.idsocio = socios.idsocio');
+		$this->db->join('compras', 'compras.id = codigo_socio.id');
+		$this->db->join('paquetes', 'paquetes.idpaquete = compras.idpaquete');
 		$this->db->order_by('apellidos', 'ASC');
         $q = $this->db->get('socios');
         if($q->result() > 0){
             foreach ($q->result() as $row) {
                 $r[] = $row;
             }
-            return $r;
         }
-        else{
-        	return 0;
-        }
+        return $r;
 	}
 
 	function _get_socio_by_id($id){
 		$this->db->select('*');
-		$this->db->where('idsocio', $id);
+		$this->db->where('socios.idsocio', $id);
 		$this->db->join('ciudad', 'ciudad.idciudad = socios.idciudad');
 		$this->db->join('provincias', 'provincias.idprovincia = ciudad.id_provincia');
+		$this->db->join('codigo_socio', 'codigo_socio.idsocio = socios.idsocio');
+		$this->db->join('rangos', 'rangos.idrango = codigo_socio.idrango');
 		$q = $this->db->get('socios');
 		//echo $this->db->last_query().'<br>';
 		if ($q->num_rows() > 0) {
@@ -137,34 +140,6 @@ class Socios_model extends CI_Model {
         else{
         	return 0;
         }
-	}
-
-	/**
-	 * Trae la información de los socios inactivos
-	 *
-	 * @return array
-	 * @author Pablo Orejuela
-	 **/
-	function _get_info_inactivos(){
-		$this->db->select('*');
-		//$this->db->select('codigo_socio_binario.idcodigo_socio_binario,codigo_socio_binario,fecha_inscripcion,nombres,apellidos,cedula');
-		$this->db->join('socios', 'socios.idsocio = codigo_socio_binario.idsocio');
-		$this->db->where('codigo_socio_binario !=', 'UNDEFINED');
-		$this->db->where('codigo_socio_binario.idsocio !=', '8');
-		//$this->db->where('idcodigo_socio_binario', 1);
-		$this->db->order_by('apellidos', 'asc');
-		//$this->db->order_by('idcodigo_socio_binario', 'asc');
-		$q = $this->db->get('codigo_socio_binario');
-		//echo $this->db->last_query();
-		if($q->num_rows() > 0){
-			foreach ($q->result() as $row) {
-				$r[] = $row;
-			}
-			return $r;
-		}
-		else{
-				return 0;
-		}
 	}
 
 	/**

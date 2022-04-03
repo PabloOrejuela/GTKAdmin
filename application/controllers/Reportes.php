@@ -6,6 +6,7 @@ class Reportes extends CI_Controller {
         parent::__construct();
         $this->load->model('acl_model');
         $this->load->model('procesos_model');
+		$this->load->model('socios_model');
         $this->load->model('administracion_model');
         $this->load->model('compras_model');
         $this->load->library('pdf');
@@ -137,15 +138,14 @@ class Reportes extends CI_Controller {
         }
     }
 
-    public function reporte_inactivos(){
+    public function reporte_actividad(){
         $rol =$this->session->userdata('rol');
         $data['per'] = $this->acl_model->_extraePermisos($rol);
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
 
-            $data['codigos_inactivos'] = $this->procesos_model->_get_info_inactivos();
-
-            $this->reporte_inactivos_pdf($data['codigos_inactivos']);
+            $codigos_activos = $this->socios_model->_get_socios_activos();
+            $this->reporte_activos_pdf($codigos_activos);
         }
         else{
             $this->index();
@@ -158,21 +158,21 @@ class Reportes extends CI_Controller {
      * @return void
      * @author Pablo Orejuela
      */
-    function reporte_inactivos_pdf($codigos_inactivos){
-        
+    function reporte_activos_pdf($codigos_activos){
+
         $this->pdf = new TCPDF("L", "mm", "A4", true, 'UTF-8', false);
         $this->pdf->setPrintHeader(false);
         $this->pdf->setPrintFooter(false);
         //Información referente al PDF
         $this->pdf->SetCreator('PDF_CREATOR');
         $this->pdf->SetAuthor('Pablo Orejuela');
-        $this->pdf->SetTitle('Reporte Inactivos');
+        $this->pdf->SetTitle('Reporte Actividad');
         $this->pdf->SetSubject('Reportes GTK Admin');
         $this->pdf->SetKeywords('TCPDF, PDF, reportes, Gtk-ecuador');
 
         $this->pdf->SetFont('Helvetica', 'C', 10);
         $this->pdf->SetMargins(12, 12, 12, true);
-        $this->pdf->SetFillColor(140,215,229);
+        $this->pdf->SetFillColor(247,246,228);
         $this->pdf->SetLineWidth(0.01);
         $this->pdf->setCellPaddings(1, 1, 1, 1);
         $this->pdf->SetLineStyle(array('width' => 0.01, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(10, 0, 0)));
@@ -194,7 +194,7 @@ class Reportes extends CI_Controller {
         $this->pdf->AddPage();
 
         $this->pdf->SetFont('helvetica', 'B', 12);
-        $this->pdf->Cell(185, 0, 'REPORTE DE SOCIOS INACTIVOS GTK ECUADOR', 'tbrl', 0, 'C', false);
+        $this->pdf->Cell(214, 0, 'REPORTE DE SOCIOS ACTIVOS GTK ECUADOR', 'tbrl', 0, 'C', false);
         
 
         $this->pdf->ln(12);
@@ -205,7 +205,7 @@ class Reportes extends CI_Controller {
         $this->pdf->SetFont('helvetica', 'B', 10);
         $this->pdf->Cell(10, 0, 'RED: ', '', 0, 'L', false);
         $this->pdf->SetFont('helvetica', 'P', 10);
-        $this->pdf->Cell(50, 0, 'PLAN RED BINARIO', '', 0, 'L', false);
+        $this->pdf->Cell(50, 0, 'PLAN RED UNINIVEL', '', 0, 'L', false);
 
         $this->pdf->ln(10);
         $this->pdf->SetX(12);
@@ -215,30 +215,26 @@ class Reportes extends CI_Controller {
         $this->pdf->Cell(80, 0, 'NOMBRE', 'LBT', 0, 'L', true);
         $this->pdf->Cell(30, 0, 'CELULAR', 'LBT', 0, 'L', true);
         $this->pdf->Cell(20, 0, 'F INGRESO', 'LBT', 0, 'L', true);
-        $this->pdf->Cell(18, 0, 'U COMPRA', 'LBT', 0, 'L', true);
-        $this->pdf->Cell(20, 0, 'PAQUETE', 'LBT', 0, 'L', true);
+		$this->pdf->Cell(20, 0, 'PAQUETE', 'LBT', 0, 'L', true);
         $this->pdf->Cell(17, 0, 'ESTADO', 'LBTR', 0, 'L', true);
         $this->pdf->SetFont('helvetica', 'P', 7);
 
-        if (!isset($codigos_inactivos) || $codigos_inactivos == NULL) {
+        if (!isset($codigos_activos) || $codigos_activos == NULL) {
             $this->pdf->ln();
             $this->pdf->Cell(185, 0, 'NO HAY DATOS PARA EL REPORTE', 'LBTR', 0, 'L', FALSE);
         }else{
             $linea = 0;
-            foreach ($codigos_inactivos as $c) {
-                $ultima_compra = $this->procesos_model->_get_ultima_compra($c->idcodigo_socio_binario);
-                $ultimo_paquete = $this->procesos_model->_get_paquete_comprado($c->idcodigo_socio_binario, $ultima_compra);
-                $estado = $this->procesos_model->_calcula_estado($c->fecha_inscripcion, $ultima_compra);
+			$estado = 1;
+            foreach ($codigos_activos as $c) {
                 
                 $this->pdf->ln();
                 $this->pdf->SetFont('helvetica', 'P', 8);
-                $this->pdf->Cell(27, 0, $c->codigo_socio_binario, 'LTB', 0, 'L', false);
+                $this->pdf->Cell(27, 0, $c->codigo_socio, 'LTB', 0, 'L', false);
                 $this->pdf->Cell(20, 0, $c->cedula, 'LTB', 0, 'L', false);
                 $this->pdf->Cell(80, 0, $c->apellidos.' '.$c->nombres, 'LBT', 0, 'L', false);
                 $this->pdf->Cell(30, 0, $c->celular, 'LBT', 0, 'C', false);
                 $this->pdf->Cell(20, 0, $c->fecha_inscripcion, 'LBT', 0, 'C', false);
-                $this->pdf->Cell(18, 0, $ultima_compra, 'LBT', 0, 'C', false);
-                $this->pdf->Cell(20, 0, $ultimo_paquete, 'LBT', 0, 'R', false);
+				$this->pdf->Cell(20, 0, $c->paquete, 'LBT', 0, 'C', false);
                 //$this->pdf->Cell(15, 0, '', 'LBTR', 0, 'R', false);
                 if ($estado == 1) {
                     $this->pdf->Cell(17, 0, 'ACTIVO', 'LBTR', 0, 'C', false);
@@ -247,10 +243,6 @@ class Reportes extends CI_Controller {
                 }
                 
                 $linea++;
-                // if ($linea >= 48) {
-                //     $this->pdf->AddPage();
-                //     $linea = 0;
-                // }
             }
         } 
         //Cerramos y damos salida al fichero PDF

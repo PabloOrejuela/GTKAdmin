@@ -1,3 +1,14 @@
+<style>
+	.dropdown-menu{
+		font-size: 0.8rem;
+		color: #eee;
+	}
+
+	#navbarDarkDropdownMenuLink {
+		color: #eee;
+	}
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1e4d04;">
   <div class="container-fluid">
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" 
@@ -14,9 +25,10 @@
                       id="navbarDarkDropdownMenuLink" role="button" 
                       data-bs-toggle="dropdown" aria-expanded="false" >Gestión de Distribuidores </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">';
-                        echo '<li><a class="dropdown-item" href="'.base_url().'reportes/red_mis_codigos_directos">Mi Organización</a></li>';
-                        echo '<li><a class="dropdown-item" href="'.base_url().'reportes/bono_constante">Bono constante del mes</a></li>';
-                        echo '<li><a class="dropdown-item" href="'.base_url().'inicio/formulario_inscripcion_miembro">Inscripción S/N</a></li>';
+                        echo '<li><a class="dropdown-item" href="'.base_url().'reportes/red_mis_codigos_directos">Mi Organización</a></li>
+                        			<li><a class="dropdown-item" href="'.base_url().'compras/comprar_producto">Comprar producto</a></li>
+															<li><hr class="dropdown-divider"></li>
+                        			<li><a class="dropdown-item" href="'.base_url().'inicio/formulario_inscripcion_miembro">Inscripción S/N</a></li>';
                 echo '</ul></li>';
             }
 
@@ -31,7 +43,7 @@
 
                         //echo '<li><a class="dropdown-item" href="'.base_url().'reportes/socios">Reporte de Comisiones por socio</a></li>';
                         echo '<li><a class="dropdown-item" href="'.base_url().'reportes/lista_codigos">Lista de códigos</a></li>';
-                        echo '<li><a class="dropdown-item" href="'.base_url().'reportes/reporte_inactivos" target="_blank">Reporte de Actividad</a></li>';
+                        echo '<li><a class="dropdown-item" href="'.base_url().'reportes/reporte_actividad" target="_blank">Reporte de Actividad</a></li>';
                         echo '<li><a class="dropdown-item" href="'.base_url().'reportes/recompras_mes">Reporte de Recompras del mes</a></li>';
                         //echo '<li><a class="dropdown-item" href="'.base_url().'reportes/reportes_ciudad">Reporte de Comisiones por ciudad</a></li>';
                         echo '</ul></li>';
@@ -71,7 +83,7 @@
 
 
             echo '<li class="nav-item">
-                    <a href="'.base_url().'inicio/logout" class="nav-link submit" onclick="" >Salir</a>
+                    <a href="'.base_url().'inicio/logout" class="nav-link submit" onclick="#" id="navbarDarkDropdownMenuLink" >Salir</a>
                   </li>';
         ?>
       </ul>

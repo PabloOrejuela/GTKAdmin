@@ -27,14 +27,14 @@
 				<tr><td colspan="2"><h5>Información del nuevo distribuidor</h5></td></tr>
 				<tr>
 					<td>
-					<div>
+					<div class="mb-3">
 						<label for="cedula" class="form-label">CI:</label>
 						<input type="text" class="form-control" id="form-control" placeholder="Cédula" name="cedula" required/>
 						<?php echo form_error('cedula'); ?>
 					</div>
 					</td>
 					<td>
-					<div>
+					<div class="mb-3">
 						<label for="cedula_patrocinador" class="form-label">Patrocinador <span style="color: red;">(opcional)</span>:</label>
 						<input type="text" class="form-control" id="form-control" placeholder="Cédula patrocinador" name="cedula_patrocinador" required/>
 						<?php echo form_error('cedula'); ?>
