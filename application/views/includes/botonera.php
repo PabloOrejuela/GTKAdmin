@@ -58,9 +58,9 @@
                     data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                       <li><a class="dropdown-item" href="'.base_url().'compras">Compras por confirmar</a></li>
-                      <li><a class="dropdown-item" href="'.base_url().'compras/frm_recompra_binaria_admin">Recomprar (Admin)</a></li>
-                      <li><a class="dropdown-item" href="'.base_url().'compras/pago_bono_constante">Pago de bonos constantes</a></li>
-                      <li><a class="dropdown-item" href="'.base_url().'testimonios/nuevo_testimonio">Ingreso de Testimonios</a></li>';
+                      <li><a class="dropdown-item" href="'.base_url().'socios/frm_confirma_socios">Confirma Socios nuevos</a></li>
+                      <li><a class="dropdown-item" href="'.base_url().'compras/pago_comisiones">Pago de Comisiones</a></li>';
+                      //<li><a class="dropdown-item" href="'.base_url().'testimonios/nuevo_testimonio">Ingreso de Testimonios</a></li>';
                 //echo '<li><a class="dropdown-item" href="'.base_url().'respalda/exportarTablas">Exportar DB</a></li>';
                       //<li><a class="dropdown-item" href="'.base_url().'inicio/completa_linea">Añade línea códigos</a></li>';
                       //echo '<li><a class="dropdown-item" href="#">Registro de Pagos</a></li>';
@@ -77,6 +77,7 @@
                       <li><a class="dropdown-item" href="https://youtu.be/V5Fe566NNDM" target="_blank">Como inscribir un Nuevo Socio</a></li>
                       <li><a class="dropdown-item" href="https://youtu.be/XdDyKmova00" target="_blank">Como realizar una compra</a></li>
                       <li><a class="dropdown-item" href="https://youtu.be/jsPwI74P_II" target="_blank">Cómo ingresar al Backoffice</a></li>
+											<li><a class="dropdown-item" href="#" target="_blank">Instructivo PDF</a></li>
 											<li><a class="dropdown-item" href="http://www.gtk-ecuador.com">Ir a la web</a></li>
                     </ul>
                   </li>';

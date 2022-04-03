@@ -1,52 +1,46 @@
 <div id="table_datos">
     <div class="col-md-12">
-        <form action="ver_lista_compras" method="post" accept-charset="utf-8">
+        <form action="lista_compras_confirmar" method="post" accept-charset="utf-8">
         <div class="col-md-12" id="grid_form">
             <h3>Compras por confirmar</h3>
-            <div class="col-md-1">
+            <div class="col-md-5">
                 <label for="fecha_evento">Provincia:</label>
             </div>
-            <?php
-                $dropdown_provincia = array(
-                    '0'  => 'Elegir...',
-                );
-                foreach ($provincias as $key => $value) {
-                    $dropdown_provincia[$value->idprovincia] = $value->provincia;
-                }
-                $js = 'id="id_provincia"';
-                echo '<div class="col-md-3">'.form_dropdown('id_provincia', $dropdown_provincia, set_value('id_provincia'), $js).'</div>';
+            <div class="mb-3 col-md-3" style="margin-top: 10px;">
+				<select class="form-select form-select-md mb-3" id_provincia name="idprovincia" id="id_provincia">
+					<?php
+						foreach ($provincias as $key => $value) {
+							echo '<option value="'.$value->idprovincia.'">'.$value->provincia.'</option>';
+						}
 
-                /*Paso el base_url() a una variable PHP
-                 * y luego a una variable Javascript para
-                 * poder usar el combo AJAX
-                 */
-                $url = base_url();
-                echo '<script languaje="JavaScript">
-                        var varjs="'.$url.'";
-                        </script>';
-            ?>
+						$js = 'id="id_provincia"';
+						$url = base_url();
+						echo '<script languaje="JavaScript">
+								var varjs="'.$url.'";
+								</script>';
+					?>
+				</select>
+			</div>
         </div>
-        <div class="col-md-12" id="grid_form">
-            <div class="col-md-1">
+        <div class="col-md-5" id="grid_form">
+            <div class="col-md-5">
                 <label for="lugar_evento">Ciudad:</label>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <select id="id_ciudad" name="ciudad" class="form-control" value="<?php echo set_value('ciudad'); ?>"></select>
             </div>
         </div>
-        <div class="col-md-12" id="grid_form">
-            <div class="col-md-1">
+        <div class="col-md-5" id="grid_form">
+            <div class="col-md-5">
                 <label for="descripcion_evento">Cédula:</label>
             </div>
             <div class="col-md-3">
-                <input type="text" name="cedula" value="<?php echo set_value('cedula'); ?>">
+                <input type="text" name="cedula" value="<?php echo set_value('cedula'); ?>" class="form-control" >
             </div>
         </div>
-        <div class="col-md-12" id="grid_form">
-            <div class="col-md-1">
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
+        <div class="col-md-5" id="grid_form">
             <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
         </div>
         </form>

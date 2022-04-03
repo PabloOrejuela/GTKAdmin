@@ -14,7 +14,7 @@ class Compras extends CI_Controller {
             
             $data['version'] = $this->config->item('system_version');
             $data['title']='GTK Admin';
-            $data['main_content']='compras/form_compras_confirmar_view';
+            $data['main_content']='compras/frm_compras_confirmar_view';
             $this->load->view('includes/template', $data);
         }
         else{
@@ -37,7 +37,7 @@ class Compras extends CI_Controller {
 	 * @return void
 	 * @author
 	 **/
-	function ver_lista_compras($result = NULL){
+	function lista_compras_confirmar($result = NULL){
 	$rol =$this->session->userdata('rol');
         $data['per'] = $this->acl_model->_extraePermisos($rol);
         $is_logged = $this->session->userdata('is_logged_in');
@@ -50,13 +50,12 @@ class Compras extends CI_Controller {
             $data['cedula'] = $this->input->post('cedula');
 
             //Traigo las filas
-            $data['rows'] = $this->compras_model->_get_compras_confirmar_uninivel($data);
-			$data['rows_consumidor'] = $this->compras_model->_get_compras_confirmar_consumidor($data);
-            $data['rows_binaria'] = $this->compras_model->_get_compras_confirmar_binaria($data);
+            $data['rows'] = $this->compras_model->_get_compras_confirmar($data);
             $data['provincias'] = $this->administracion_model->_get_provincias();
+
             $data['version'] = $this->config->item('system_version');
             $data['title']='GTK Admin';
-            $data['main_content']='compras/form_compras_confirmar_datos_view';
+            $data['main_content']='compras/frm_compras_confirmar_datos_view';
             $this->load->view('includes/template', $data);
         }
         else{
@@ -76,7 +75,7 @@ class Compras extends CI_Controller {
         */
 		$r = $this->compras_model->_confirmar_compra($idcompras);
 
-		$this->ver_lista_compras($r);
+		$this->lista_compras_confirmar($r);
 	}
 
     /**
@@ -92,7 +91,7 @@ class Compras extends CI_Controller {
 
         $r = $this->compras_model->_eliminar_compra($idcompras);
 
-        $this->ver_lista_compras($r);
+        $this->lista_compras_confirmar($r);
 
     }
     

@@ -13,7 +13,7 @@ class Compras_model extends CI_Model {
 	 **/
 	function _get_compras_confirmar($data){
 
-            //COMPRAS UNINIVEL
+            //COMPRAS
             $this->db->select('*');
             $this->db->where('pago', 0);
             if ($data['idciudad'] != NULL) {
@@ -22,10 +22,8 @@ class Compras_model extends CI_Model {
             if ($data['cedula'] != NULL) {
                 $this->db->like('socios.cedula', $data['cedula']);
             }
-            $this->db->join('codigo_socio', 'compras.idcod_socio=codigo_socio.idcod_socio');
-            //Paquete de Uninivel es siempre el 4
-            $this->db->join('paquetes', 'idpaquete=4');
-            $this->db->join('rangos', 'rangos.idrango=codigo_socio.idrango');
+            $this->db->join('codigo_socio', 'compras.id=codigo_socio.id');
+            $this->db->join('paquetes', 'paquetes.idpaquete=compras.idpaquete');
             $this->db->join('socios', 'socios.idsocio = codigo_socio.idsocio');
             $this->db->join('ciudad', 'socios.idciudad=ciudad.idciudad');
             $this->db->join('provincias', 'ciudad.id_provincia=provincias.idprovincia');

@@ -58,7 +58,7 @@
 				</div>
 				<div class="mb-3" style="margin-top: 10px;;">
 					<label class="form-label">Seleccione un paquete:</label>
-					<select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="idpaquete">
+					<select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" name="idpaquete">
 						<?php
 							foreach ($paquetes as $key => $value) {
 								echo '<option value="'.$value->idpaquete.'">$ '.number_format($value->paquete, 2).'</option>';

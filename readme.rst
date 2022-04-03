@@ -11,3 +11,7 @@ FECHA: 2022-04-02
 - Actualizado el Bootstrap a la versión 5
 - Nuevo form de inscripción
 - Eliminada la opción de inscribir a un socio sin estar logueado
+- Corregidos los forms de Compras confirmar
+- Corregido el Reporte de Lista de socios activos
+- Añadido el link de confirmar Socios Nuevos
+- Añadido el link de Pago de Comisiones
