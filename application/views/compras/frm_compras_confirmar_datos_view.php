@@ -77,37 +77,6 @@
                             echo '</tr>';
                         }
                     }
-					if(isset($rows_binaria) && $rows_binaria != null && $rows_binaria != 0){
-                        foreach ($rows_binaria as $value) {
-                            echo '<tr>';
-                            echo '<td>'.$value['codigo_socio_binario'].'</td>';
-                            echo '<td>'.$value['nombres'].' '.$value['apellidos'].'</td>';
-                            echo '<td>'.$value['cedula'].'</td>';
-                            echo '<td>'.$value['provincia'].'</td>';
-                            echo '<td>'.$value['ciudad'].'</td>';
-                            echo '<td style="text-align:right;">$'.number_format(($value['paquete']), 2).'</td>';
-                            echo '<td>'.$value['fecha'].'</td>';
-                            echo '<td>BINARIA</td>';
-                            echo '<td>'.anchor('compras/confirma_compra_binaria/'.$value['idcompras_binario'], '<i class="fa fa-check-circle-o" aria-hidden="true"> CONFIRMAR</i>', 'attributes').'</td>';
-                            echo '<td>'.anchor('compras/elimina_compra_binaria/'.$value['idcompras_binario'], '<span style="color:red;"><i class="fa fa-ban" aria-hidden="true"> CANCELAR</i>', 'attributes').'</span></td>';
-                            echo '</tr>';
-                        }
-                    }if(isset($rows_consumidor) && $rows_consumidor != null && $rows_consumidor != 0){
-                        foreach ($rows_consumidor as $value) {
-                            echo '<tr>';
-                            echo '<td>N/A</td>';
-                            echo '<td>'.$value['nombres'].' '.$value['apellidos'].'</td>';
-                            echo '<td>'.$value['cedula'].'</td>';
-                            echo '<td>'.$value['provincia'].'</td>';
-                            echo '<td>'.$value['ciudad'].'</td>';
-                            echo '<td style="text-align:right;">$'.number_format(($value['paquete']), 2).'</td>';
-                            echo '<td>'.$value['fecha'].'</td>';
-                            echo '<td>CONSUMIDOR</td>';
-                            echo '<td>'.anchor('compras/confirma_compra_externa/'.$value['idcompras_consumo'], '<i class="fa fa-check-circle-o" aria-hidden="true"> CONFIRMAR</i>', 'attributes').'</td>';
-                            echo '<td>'.anchor('compras/elimina_compra_externa/'.$value['idcompras_consumo'], '<span style="color:red;"><i class="fa fa-ban" aria-hidden="true"> CANCELAR</i>', 'attributes').'</span></td>';
-                            echo '</tr>';
-                        }
-                    }
 
 					if (!isset($result) || $result == NULL) {
 						//No muestro nada

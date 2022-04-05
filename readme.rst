@@ -15,3 +15,4 @@ FECHA: 2022-04-02
 - Corregido el Reporte de Lista de socios activos
 - Añadido el link de confirmar Socios Nuevos
 - Añadido el link de Pago de Comisiones
+- Formulario de activar membresías nuevas corregido

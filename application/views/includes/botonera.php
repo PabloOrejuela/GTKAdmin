@@ -58,7 +58,7 @@
                     data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                       <li><a class="dropdown-item" href="'.base_url().'compras">Compras por confirmar</a></li>
-                      <li><a class="dropdown-item" href="'.base_url().'socios/frm_confirma_socios">Confirma Socios nuevos</a></li>
+                      <li><a class="dropdown-item" href="'.base_url().'socios/lista_confirma_socios">Activar membresías</a></li>
                       <li><a class="dropdown-item" href="'.base_url().'compras/pago_comisiones">Pago de Comisiones</a></li>';
                       //<li><a class="dropdown-item" href="'.base_url().'testimonios/nuevo_testimonio">Ingreso de Testimonios</a></li>';
                 //echo '<li><a class="dropdown-item" href="'.base_url().'respalda/exportarTablas">Exportar DB</a></li>';

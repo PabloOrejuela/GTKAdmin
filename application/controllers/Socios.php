@@ -38,6 +38,52 @@ class Socios extends CI_Controller {
             redirect('Inicio');
         }
     }
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author
+	 **/
+	function lista_confirma_socios($result = NULL){
+		$rol =$this->session->userdata('rol');
+		$data['per'] = $this->acl_model->_extraePermisos($rol);
+		$is_logged = $this->session->userdata('is_logged_in');
+		$data['result'] = $result;
+		if (isset($is_logged) == true || isset($is_logged) == 1) {
+
+			// //Capturo los datos
+			// $data['idprovincia'] = $this->input->post('id_provincia');
+			// $data['idciudad'] = $this->input->post('ciudad');
+			// $data['cedula'] = $this->input->post('cedula');
+
+			// //Traigo las filas
+			$data['socios'] = $this->socios_model->_get_codigo_estado(0);
+			// $data['provincias'] = $this->administracion_model->_get_provincias();
+
+			$data['version'] = $this->config->item('system_version');
+			$data['title']='GTK Admin';
+			$data['main_content']='socios/frm_socios_confirmar_view';
+			$this->load->view('includes/template', $data);
+		}
+		else{
+			echo $this->index();
+		}
+	}
+
+	/**
+	 * Aqui se confirma elpago de la membresía y activamos el codigo
+	 *
+	 * @return void
+	 * @author
+	 **/
+	function activa_codigo(){
+        
+		$id = $this->input->post('id');
+		$result = $this->socios_model->_confirmar_membresia($id);
+
+		$this->lista_confirma_socios($result);
+	}
     
     /**
      * Elimina un socio y libera los datos de las tablas
