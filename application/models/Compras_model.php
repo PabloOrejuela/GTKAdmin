@@ -65,7 +65,7 @@ class Compras_model extends CI_Model {
 		$q = $this->db->get('comisiones');
 		//echo $this->db->last_query();
 		if ($q->num_rows() > 0) {
-			foreach ($q->result_array() as $r) {
+			foreach ($q->result() as $r) {
 				$filas[] = $r;
 			}
 			return $filas;

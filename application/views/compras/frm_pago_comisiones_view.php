@@ -45,6 +45,7 @@
             </div>
         </div>
         </form>
+		<br />
         <table class="table table-bordered table-striped table-condensed" id="table_resumen">
             <thead>
                 <tr>
@@ -56,7 +57,6 @@
 					<th>PUNTOS</th>
 					<th>COMISION</th>
                     <th>CONFIRMAR PAGO</th>
-                    <th>CANCELAR</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,15 +64,14 @@
                     if (isset($rows) && $rows != NULL && $rows != 0) {
                         foreach ($rows as $value) {
                             echo '<tr>';
-                            echo '<td>'.$value['codigo_socio'].'</td>';
-                            echo '<td>'.$value['nombres'].' '.$value['apellidos'].'</td>';
-                            echo '<td>'.$value['cedula'].'</td>';
-                            echo '<td>'.$value['provincia'].'</td>';
-                            echo '<td>'.$value['ciudad'].'</td>';
-							echo '<td>'.$value['puntos'].'</td>';
-							echo '<td>'.$value['comision'].'</td>';
-                            echo '<td>'.anchor('compras/confirma_compra/'.$value['idcompras'], '<i class="fa fa-check-circle-o" aria-hidden="true"> CONFIRMAR</i>', 'attributes').'</td>';
-                            echo '<td>'.anchor('compras/elimina_compra/'.$value['idcompras'], '<span style="color:red;"><i class="fa fa-ban" aria-hidden="true"> CANCELAR</i>', 'attributes').'</span></td>';
+                            echo '<td>'.$value->codigo_socio.'</td>';
+                            echo '<td>'.$value->nombres.' '.$value->apellidos.'</td>';
+                            echo '<td>'.$value->cedula.'</td>';
+                            echo '<td>'.$value->provincia.'</td>';
+                            echo '<td>'.$value->ciudad.'</td>';
+							echo '<td>'.$value->puntos.'</td>';
+							echo '<td>'.$value->comision.'</td>';
+                            echo '<td>'.anchor('compras/confirma_pago_comision/'.$value->idcomision, '<i class="fa fa-check-circle-o" aria-hidden="true"> CONFIRMAR</i>', 'attributes').'</td>';
                             echo '</tr>';
                         }
                     }
@@ -82,7 +81,7 @@
 					}elseif (isset($result) && $result == 0) {
 						echo '<tr><td>RESULTADO: </td><td colspan="5"><span id="resultado">Ha habido un error en la confirmación</span></td></tr>';
 					}elseif (isset($result) && $result == 1) {
-						echo '<tr><td>RESULTADO: </td><td colspan="5"><span id="resultado">La confirmación de la compra ha sido existosa</span></td></tr>';
+						echo '<tr><td>RESULTADO: </td><td colspan="5"><span id="resultado">La confirmación del pago ha sido existosa</span></td></tr>';
 					}
 					?>
             </tbody>

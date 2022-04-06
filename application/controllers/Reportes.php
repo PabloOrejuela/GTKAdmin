@@ -9,6 +9,7 @@ class Reportes extends CI_Controller {
 		$this->load->model('socios_model');
         $this->load->model('administracion_model');
         $this->load->model('compras_model');
+		$this->load->model('comisiones_model');
         $this->load->library('pdf');
     }
 
@@ -20,7 +21,7 @@ class Reportes extends CI_Controller {
             redirect('Inicio','refresh');
         }
         else{
-            $this->inicio();
+            $this->index();
         }
     }
 
@@ -486,16 +487,6 @@ class Reportes extends CI_Controller {
         }
     }
 
-    function elige_resumen_financiero(){
-        $idmatrices = $this->input->post('idmatrices');
-        $id_codigo = $this->input->post('id_codigo');
-        if ($idmatrices == 2) {
-            $this->resumen_financiero_binario($id_codigo);
-        }else if($idmatrices == 3){
-            $this->resumen_financiero($id_codigo);
-        }
-    }
-
     function resumen_financiero(){
         
         $rol =$this->session->userdata('rol');
@@ -504,8 +495,9 @@ class Reportes extends CI_Controller {
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
             
-
-            //UNINIVEL
+			//Actualizo las comisiones
+			$this->comisiones_model->_calcula_comisiones();
+            
             $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
             $data['comisiones'] = $this->procesos_model->_calcula_comisiones($data['socio']);
 			$data['patrocinados'] = $this->procesos_model->_es_patrocinador_directo($data['socio']);
