@@ -36,7 +36,7 @@
 					<td>
 					<div class="mb-3">
 						<label for="cedula_patrocinador" class="form-label">Patrocinador <span style="color: red;">(opcional)</span>:</label>
-						<input type="text" class="form-control" id="form-control" placeholder="Cédula patrocinador" name="cedula_patrocinador" required/>
+						<input type="text" class="form-control" id="form-control" placeholder="Cédula patrocinador" name="cedula_patrocinador"/>
 						<?php echo form_error('cedula'); ?>
 					</div>
 					</td>

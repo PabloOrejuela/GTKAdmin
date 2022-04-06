@@ -19,7 +19,7 @@ class Compras extends CI_Controller {
         }
         else{
             
-            $this->load->view('includes/template_login', $data);
+            redirect('Inicio','refresh');
         }
     }
 
@@ -30,6 +30,39 @@ class Compras extends CI_Controller {
         $this->load->model('compras_model');
 		$this->load->model('socios_model');
     }
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author
+	 **/
+	function pago_comisiones($result = NULL){
+		$rol =$this->session->userdata('rol');
+			$data['per'] = $this->acl_model->_extraePermisos($rol);
+			$is_logged = $this->session->userdata('is_logged_in');
+			$data['result'] = $result;
+			if (isset($is_logged) == true || isset($is_logged) == 1) {
+	
+				//Capturo los datos
+				$data['idprovincia'] = $this->input->post('id_provincia');
+				$data['idciudad'] = $this->input->post('ciudad');
+				$data['cedula'] = $this->input->post('cedula');
+	
+				//Traigo las filas
+				$data['rows'] = $this->compras_model->_get_comisiones_confirmar($data);
+				$data['provincias'] = $this->administracion_model->_get_provincias();
+	
+				$data['version'] = $this->config->item('system_version');
+				$data['title']='GTK Admin';
+				$data['main_content']='compras/frm_pago_comisiones_view';
+				$this->load->view('includes/template', $data);
+			}
+			else{
+				echo $this->index();
+			}
+		}
+
 
 	/**
 	 * undocumented function

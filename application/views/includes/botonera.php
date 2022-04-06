@@ -25,7 +25,7 @@
                       id="navbarDarkDropdownMenuLink" role="button" 
                       data-bs-toggle="dropdown" aria-expanded="false" >Gestión de Distribuidores </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">';
-                        echo '<li><a class="dropdown-item" href="'.base_url().'reportes/red_mis_codigos_directos">Mi Organización</a></li>
+                        echo '<li><a class="dropdown-item" href="'.base_url().'reportes/resumen_financiero">Resumen financiero</a></li>
                         			<li><a class="dropdown-item" href="'.base_url().'compras/comprar_producto">Comprar producto</a></li>
 															<li><hr class="dropdown-divider"></li>
                         			<li><a class="dropdown-item" href="'.base_url().'inicio/formulario_inscripcion_miembro">Inscripción S/N</a></li>';
@@ -45,7 +45,7 @@
                         echo '<li><a class="dropdown-item" href="'.base_url().'reportes/lista_codigos">Lista de códigos</a></li>';
                         echo '<li><a class="dropdown-item" href="'.base_url().'reportes/reporte_actividad" target="_blank">Reporte de Actividad</a></li>';
                         echo '<li><a class="dropdown-item" href="'.base_url().'reportes/recompras_mes">Reporte de Recompras del mes</a></li>';
-                        //echo '<li><a class="dropdown-item" href="'.base_url().'reportes/reportes_ciudad">Reporte de Comisiones por ciudad</a></li>';
+                        echo '<li><a class="dropdown-item" href="'.base_url().'reportes/comisiones_ciudad">Reporte de Comisiones por ciudad</a></li>';
                         echo '</ul></li>';
                       }else{
                         echo '<li><a class="dropdown-item" href="'.base_url().'reportes">Reporte de Comisiones Personal</a></li></ul></li>';

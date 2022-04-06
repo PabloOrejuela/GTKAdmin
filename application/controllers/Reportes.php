@@ -256,7 +256,7 @@ class Reportes extends CI_Controller {
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
 
-            //$data['idcodigo_socio_binario'] = $this->input->post('idcodigo_socio_binario');
+            
             $data['ordenar'] = $this->input->post('ordenar');
 
             $data['provincias'] = $this->procesos_model->_get_provincias();
@@ -279,7 +279,7 @@ class Reportes extends CI_Controller {
         $data['per'] = $this->acl_model->_extraePermisos($rol);
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
-            // PABLO: El valor de la idciudad está en la sessión;
+            
             $idmatrices = $this->input->post('idmatrices');
             if ($idmatrices == 'NULL') {
                 $data['matrices'] = $this->procesos_model->_get_matrices();
@@ -496,36 +496,22 @@ class Reportes extends CI_Controller {
         }
     }
 
-    function resumen_financiero($id_codigo){
+    function resumen_financiero(){
         
-        // PABLO: hacer una funcion que revise las compras y que actualice el rango antes de sacar el resumen
         $rol =$this->session->userdata('rol');
-        $id_socio =$this->session->userdata('id');
+        $idsocio =$this->session->userdata('id');
         $data['per'] = $this->acl_model->_extraePermisos($rol);
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
-            $semana = date('W');
-            $data['idcod_socio'] = $id_codigo;
+            
+
             //UNINIVEL
-            $data['idmatrices'] = 3;
-            $data['socio'] = $this->administracion_model->_get_array_socio_by_id($id_socio);
-            $data['rango'] = $this->procesos_model->_get_rango_codigo_uninivel($data['idcod_socio']);
-            $data['patrocinados'] = $this->procesos_model->_es_patrocinador_uninivel($data['idcod_socio']);
-            $data['nuevos_socios_semana'] = $this->procesos_model->_nuevos_socios_semana($data['idcod_socio']);
-            $data['compras_socio'] = $this->procesos_model->_get_cuentas_socio_by_idcod($data['idcod_socio']);
-            $data['bono_rango'] = $this->procesos_model->_get_bono_rango($data['rango']['idrango']);
-
-            $data['litros_movidos'] = $this->procesos_model->_get_litros_movidos_red($data['idcod_socio']);
-
-            $data['litros_rango'] = $this->procesos_model->_get_litros_rango($data['rango']['idrango']);
-            $data['litros_movidos_totales'] = $data['litros_movidos'] + $data['compras_socio'];
-
-            //Actualizo la semana
-            $this->procesos_model->_actualiza_semana($data['idcod_socio'],$data['litros_movidos_totales'], $data['litros_rango'], $semana);
-            $data['semana_seguida'] = $this->procesos_model->_get_semana_cumple($data['idcod_socio']);
+            $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
+            $data['comisiones'] = $this->procesos_model->_calcula_comisiones($data['socio']);
+			$data['patrocinados'] = $this->procesos_model->_es_patrocinador_directo($data['socio']);
 
             $data['title']='GTK Admin';
-            $data['main_content']='reportes/frm_resumen_financiero';
+            $data['main_content']='reportes/resumen_financiero';
             $this->load->view('includes/template', $data);
         }
         else{
@@ -639,40 +625,6 @@ class Reportes extends CI_Controller {
         }
         else{
             $this->index();
-        }
-    }
-
-    /**
-     * urecibe un entero y devuelve su ubicación en la piramide
-     *
-     * @return int
-     * @author Pablo Orejuela
-     **/
-    function _get_ultima_fila($posicion){
-        if ($posicion > 1 && $posicion <= 3) {
-            return 2;
-        }else if($posicion > 3 && $posicion <= 3){
-            return 3;
-        }else if($posicion > 4 && $posicion <= 7){
-            return 4;
-        }else if($posicion > 8 && $posicion <= 15){
-            return 5;
-        }else if($posicion > 16 && $posicion <= 31){
-            return 6;
-        }else if($posicion > 32 && $posicion <= 63){
-            return 7;
-        }else if($posicion > 64 && $posicion <= 127){
-            return 8;
-        }else if($posicion > 128 && $posicion <= 255){
-            return 9;
-        }else if($posicion > 256 && $posicion <= 511){
-            return 10;
-        }else if($posicion > 512 && $posicion <= 1023){
-            return 11;
-        }else if($posicion > 1024 && $posicion <= 2049){
-            return 12;
-        }else{
-            return 1;
         }
     }
 

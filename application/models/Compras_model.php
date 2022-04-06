@@ -40,6 +40,41 @@ class Compras_model extends CI_Model {
 	}
 
 	/**
+	 * Devuelve las compras sin confirmar uninivel
+	 *
+	 * @return void
+	 * @author Pablo Orejuela
+	 **/
+	function _get_comisiones_confirmar($data){
+
+		//COMPRAS
+		$this->db->select('*');
+		$this->db->where('pagado', 0);
+		if ($data['idciudad'] != NULL) {
+			$this->db->where('socios.idciudad', $data['idciudad']);
+		}
+		if ($data['cedula'] != NULL) {
+			$this->db->like('socios.cedula', $data['cedula']);
+		}
+		$this->db->join('codigo_socio', 'comisiones.id=codigo_socio.id');
+		$this->db->join('compras', 'compras.id=codigo_socio.id');
+		$this->db->join('paquetes', 'paquetes.idpaquete=compras.idpaquete');
+		$this->db->join('socios', 'socios.idsocio = codigo_socio.idsocio');
+		$this->db->join('ciudad', 'socios.idciudad=ciudad.idciudad');
+		$this->db->join('provincias', 'ciudad.id_provincia=provincias.idprovincia');
+		$q = $this->db->get('comisiones');
+		//echo $this->db->last_query();
+		if ($q->num_rows() > 0) {
+			foreach ($q->result_array() as $r) {
+				$filas[] = $r;
+			}
+			return $filas;
+		}else{
+			return NULL;
+		}
+}
+
+	/**
 	 * undocumented function
 	 *
 	 * @return void
