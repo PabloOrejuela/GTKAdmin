@@ -208,8 +208,8 @@ input[type="submit"] {
 }
 
 #form_login {
-	border: 1px dotted #6d6c6b;
-	background-color: #f8f6ee;
+	
+	background-color: #fdfdf3;
 	border-radius: 4px;
 	height: 100%;
 	margin-top: 100px;
@@ -278,6 +278,10 @@ input[type="submit"] {
 	padding-bottom: 1px;
 	text-decoration: none;
 	font-family: Arial, Helvetica, sans-serif;
+}
+
+#btn_submit {
+	margin-top: 10px;
 }
 
 #td_izq {
