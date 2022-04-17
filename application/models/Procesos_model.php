@@ -219,7 +219,7 @@ class Procesos_model extends CI_Model {
 	}
 
 	/**
-	 * Extrae los patrocinados directos
+	 * Extrae el número de patrocinados directos
 	 *
 	 * @return array
 	 * @author Pablo Orejuela
@@ -235,6 +235,191 @@ class Procesos_model extends CI_Model {
             $patro = $q->num_rows();
         }
 		return $patro;
+	}
+
+	
+
+	/**
+	 * Extrae los patrocinados directos
+	 *
+	 * @return array
+	 * @author Pablo Orejuela
+	 **/
+	function _get_hijos_activos($idsocio){
+		//$idrango = $this->_get_rango_idcodigo($idcod_socio);
+		$hijos = NULL;
+		$this->db->select('idsocio');
+		$this->db->where('patrocinador', $idsocio);
+        $q = $this->db->get('codigo_socio');
+        //echo $this->db->last_query();
+        if($q->num_rows() > 0){
+			foreach ($q->result() as $value) {
+				$hijos[] = $value->idsocio;
+			}	
+        }
+		return $hijos;
+	}
+
+	/**
+	 * Extrae los patrocinados directos
+	 *
+	 * @return array
+	 * @author Pablo Orejuela
+	 **/
+	function _get_hijos($idsocio){
+		
+		$hijos = NULL;
+		$this->db->select('idsocio');
+		$this->db->where('patrocinador', $idsocio);
+        $q = $this->db->get('codigo_socio');
+        //echo $this->db->last_query();
+        if($q->num_rows() > 0){
+			foreach ($q->result() as $value) {
+				$hijos[] = $value->idsocio;
+			}
+			
+        }
+		return $hijos;
+	}
+
+	function _get_segundo_nivel($primero){
+		foreach ($primero as $value) {
+			if (isset($value) && $value !== NULL) {
+				$segundo[] = $this->_get_hijos($value);
+			}else{
+				$segundo[] = NULL;
+			}
+		}
+		return $segundo;
+	}
+
+	function _get_siguiente_nivel($array){
+		foreach ($array as $value) {
+			if (isset($value)) {
+				foreach ($value as $v) {
+					if (isset($v) && $v !== NULL) {
+						$siguiente[] = $this->_get_hijos($v);
+					}
+				}
+			}else{
+				$siguiente[] = NULL;
+			}
+		}
+
+		return $siguiente;
+	}
+
+
+	/**
+	 * Arma la red de un socio
+	 *
+	 *
+	 * @param Type Object
+	 * @return type array
+	 * @throws conditon
+	 **/
+	function _get_red($socio) {
+		
+		//priner nivel
+		$primero = $this->_get_hijos($socio->idsocio);
+
+		//segundo nivel
+		foreach ($primero as $value) {
+			if (isset($value) && $value !== NULL) {
+				$segundo[] = $this->_get_hijos($value);
+			}else{
+				$segundo[] = NULL;
+			}
+		}
+
+		//Tercer nivel
+		foreach ($segundo as $value) {
+			if (isset($value)) {
+				foreach ($value as $v) {
+					if (isset($v) && $v !== NULL) {
+						$tercero[] = $this->_get_hijos($v);
+					}
+				}
+			}else{
+				$tercero[] = NULL;
+			}
+		}
+		
+		//Cuarto nivel
+		foreach ($tercero as $value) {
+			if (isset($value)) {
+				foreach ($value as $v) {
+					if (isset($v) && $v !== NULL) {
+						$cuarto[] = $this->_get_hijos($v);
+					}
+				}
+			}else{
+				$cuarto[] = NULL;
+			}
+		}
+		
+		//Quinto nivel
+		foreach ($cuarto as $value) {
+			if (isset($value) && $value !== NULL) {
+				foreach ($value as $v) {
+					if (isset($v) && $v !== NULL) {
+						$quinto[] = $this->_get_hijos($v);
+					}
+				}
+			}else{
+				$quinto[] = NULL;
+			}
+		}
+
+		//Sexto nivel
+		foreach ($quinto as $value) {
+			if (isset($value) && $value !== NULL) {
+				foreach ($value as $v) {
+					if (isset($v) && $v !== NULL) {
+						$sexto[] = $this->_get_hijos($v);
+					}
+				}
+			}else{
+				$sexto[] = NULL;
+			}
+		}
+
+		//Septimo nivel
+		foreach ($sexto as $value) {
+			if (isset($value) && $value !== NULL) {
+				foreach ($value as $v) {
+					if (isset($v) && $v !== NULL) {
+						$septimo[] = $this->_get_hijos($v);
+					}
+				}
+			}else{
+				$septimo[] = NULL;
+			}
+		}
+
+		//Octavo nivel
+		foreach ($septimo as $value) {
+			if (isset($value) && $value !== NULL) {
+				foreach ($value as $v) {
+					if (isset($v) && $v !== NULL) {
+						$octavo[] = $this->_get_hijos($v);
+					}
+				}
+			}else{
+				$octavo[] = NULL;
+			}
+		}
+
+		//$red = array_merge($red, $segundo, $tercero, $cuarto);
+		
+		echo '2<pre>'.var_export($segundo, true).'</pre>';
+		echo '3<pre>'.var_export($tercero, true).'</pre>';
+		echo '4<pre>'.var_export($cuarto, true).'</pre>';
+		echo '5<pre>'.var_export($quinto, true).'</pre>';
+		echo '6<pre>'.var_export($sexto, true).'</pre>';
+		echo '7<pre>'.var_export($septimo, true).'</pre>';
+
+		//return array_filter($red);
 	}
 
 	/**

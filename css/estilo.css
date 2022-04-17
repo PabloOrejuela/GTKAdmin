@@ -344,7 +344,7 @@ select {
 	padding: 5px;
 	vertical-align: middle;
 	margin: 20px;
-	width: 90%;
+	width: 60%;
 }
 
 #td_left {
@@ -365,7 +365,7 @@ select {
 	vertical-align: middle;
 	text-align: left;
 	padding: 3px;
-	width: 100px;
+	width: 30%;
 	text-align: left;
 }
 
@@ -379,17 +379,15 @@ select {
 
 #td_resumen_cabecera_left {
 	
-	vertical-align: middle;
 	text-align: left;
 	font-weight: bold;
-	padding: 5px;
-	width: 35%;
+	padding: 3px;
+	width: 30%;
 }
 
 #td_resumen_cabecera_right {
 	
-	vertical-align: middle;
-	padding: 5px;
+	padding: 3px;
 	text-align: left;
 }
 

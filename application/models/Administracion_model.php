@@ -88,26 +88,6 @@ class Administracion_model extends CI_Model {
         }
         return $paquetes;
     }
-
-	function _obten_red($patrocinador){
-
-        /*Función que arma la red del usuario*/
-		$this->db->select('*');
-		//$this->db->where('patrocinador >=', $patrocinador);
-		$this->db->or_where('idcodigo_socio_binario >=', $patrocinador);
-        $this->db->where('codigo_socio_binario ==', 'UNDEFINED');
-        $this->db->join('socios', 'socios.idsocio = codigo_socio_binario.idsocio');
-		$q = $this->db->get('codigo_socio_binario');
-		//echo $this->db->last_query();
-		if ($q->num_rows() > 0) {
-                foreach ($q->result_array() as $s) {
-                    $socios[] = $s;
-                }
-                return $socios;
-            }else{
-                    return 0;
-            }
-    }
     
 	function _obten_socios($data){
 		$this->db->select('*');

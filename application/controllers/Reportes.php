@@ -461,31 +461,27 @@ class Reportes extends CI_Controller {
         echo json_encode($json_array);
     }
 
-
-    function red_mis_codigos($value=''){
-        $rol =$this->session->userdata('rol');
-        $id_socio =$this->session->userdata('id');
+	/**
+	 * undocumented function summary
+	 *
+	 * @param Type $var Description
+	 * @return type
+	 * @throws conditon
+	 **/
+	public function mi_red(){
+		$rol =$this->session->userdata('rol');
+        $idsocio = $this->session->userdata('id');
         $data['per'] = $this->acl_model->_extraePermisos($rol);
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
-            $data['socio']=$this->administracion_model->_get_array_socio_by_id($id_socio);
-            
-            $data['codigo']=$this->administracion_model->_get_codigos_by_socio($id_socio);
-
-            if ($data['codigos_binarios'] || $data['codigos_uninivel']) {
-                $data['title']='GTK Admin';
-                $data['main_content']='reportes/form_red_mis_codigos';
-                $this->load->view('includes/template', $data);
-            }else{
-                $data['title']='GTK Admin';
-                $data['main_content']='reportes/error';
-                $this->load->view('includes/template', $data);
-            }   
-        }
-        else{
-            $this->inicio();
-        }
-    }
+			$data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
+			$data['red'] = $this->procesos_model->_get_red($data['socio']);
+			//echo '<pre>'.var_export($data['red'], true).'</pre>';
+		}else{
+			$this->index();
+		}
+		
+	}
 
     function resumen_financiero(){
         
@@ -497,13 +493,19 @@ class Reportes extends CI_Controller {
             
 			//Actualizo las comisiones
 			$this->comisiones_model->_calcula_comisiones();
-            
             $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
             $data['comisiones'] = $this->procesos_model->_calcula_comisiones($data['socio']);
-			$data['patrocinados'] = $this->procesos_model->_es_patrocinador_directo($data['socio']);
 
+			$data['primero'] = $this->procesos_model->_get_hijos($idsocio);
+			$data['segundo'] = $this->procesos_model->_get_segundo_nivel($data['primero']);
+			$data['tercero'] = $this->procesos_model->_get_siguiente_nivel($data['segundo']);
+			$data['cuarto'] = $this->procesos_model->_get_siguiente_nivel($data['tercero']);
+
+
+			echo '<pre>'.var_export($data['tercero'], true).'</pre>';
+			
             $data['title']='GTK Admin';
-            $data['main_content']='reportes/resumen_financiero';
+            $data['main_content']='reportes/resumen_financiero_view';
             $this->load->view('includes/template', $data);
         }
         else{
@@ -599,25 +601,6 @@ class Reportes extends CI_Controller {
 
         //Cerramos y damos salida al fichero PDF
         $this->pdf->Output('historico_bonos_binario.pdf', 'I');
-    }
-
-    public function mi_red(){
-        $rol =$this->session->userdata('rol');
-        $id_socio =$this->session->userdata('id');
-        $data['per'] = $this->acl_model->_extraePermisos($rol);
-        $is_logged = $this->session->userdata('is_logged_in');
-        if (isset($is_logged) == true || isset($is_logged) == 1) {
-            $idcodigo = $this->input->post('id_codigo');
-            $data['socio']=$this->administracion_model->_get_array_socio_by_id($id_socio);
-            $data['patrocinados'] = $this->procesos_model->_es_patrocinador_uninivel_directo($idcodigo);
-            $data['version'] = $this->config->item('system_version');
-            $data['title']='GTK Admin';
-            $data['main_content']='reportes/directos_uninivel_view';
-            $this->load->view('includes/template', $data);
-        }
-        else{
-            $this->index();
-        }
     }
 
     /**
