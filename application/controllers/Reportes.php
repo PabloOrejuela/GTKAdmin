@@ -494,7 +494,6 @@ class Reportes extends CI_Controller {
 			//Actualizo las comisiones
 			$this->comisiones_model->_calcula_comisiones();
             $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
-            $data['comisiones'] = $this->procesos_model->_calcula_comisiones($data['socio']);
 
 			$data['primero'] = $this->procesos_model->_get_hijos($idsocio);
 			$data['segundo'] = $this->procesos_model->_get_segundo_nivel($data['primero']);
@@ -502,7 +501,7 @@ class Reportes extends CI_Controller {
 			$data['cuarto'] = $this->procesos_model->_get_siguiente_nivel($data['tercero']);
 
 
-			echo '<pre>'.var_export($data['tercero'], true).'</pre>';
+			//echo '<pre>'.var_export($data['tercero'], true).'</pre>';
 			
             $data['title']='GTK Admin';
             $data['main_content']='reportes/resumen_financiero_view';

@@ -441,31 +441,6 @@ class Procesos_model extends CI_Model {
 			return 0;
 		}
 	}
-
-	/**
-	 * Calcula las comisiones
-	 *
-	 * @return cantidad a pagar
-	 * @author Pablo Orejuela
-	 **/
-	function _calcula_comisiones($socio){
-
-		$puntos = 0;
-		$niveles = 20;
-
-		//para cada fila
-		for ($i=0; $i <= $niveles; $i++) { 
-			//Obtengo los patrocinados
-			$puntos_patrocinados = $this->_get_compras_patrocinados($socio->idsocio);
-		}
-		//PABLO trabajando el resumen financiero
-		//obtengo los puntos de los patrocinados y los sumo 
-		$puntos_patrocinados = $this->_get_compras_patrocinados($socio->idsocio);
-		foreach($puntos_patrocinados as $p){
-			echo $p->puntos;
-		}
-		return $puntos_patrocinados;
-	}
 }
 
 /* End of file Procesos_model.php */
