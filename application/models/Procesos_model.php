@@ -103,28 +103,6 @@ class Procesos_model extends CI_Model {
         return $query->result();
     }
 
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 * @author
-	 **/
-	function _litros_por_cobrar($id_codigo){
-		$r = 0;
-		$this->db->select('litros_ganados');
-		$this->db->where('litros_ganados.idcod_socio', $id_codigo);
-		$this->db->join('socios', 'socios.idsocio = litros_ganados.idcod_socio');
-        $q = $this->db->get('litros_ganados');
-        if($q->num_rows() > 0){
-            foreach ($q->result() as $row) {
-                $r = $row->litros_ganados;
-            }
-            return $r;
-        }
-        else{
-        	return 0;
-        }
-	}
 
 	/**
 	 * devuelve la cantidad de puntos que debe subir por rango
@@ -269,13 +247,14 @@ class Procesos_model extends CI_Model {
 	function _get_hijos($idsocio){
 		
 		$hijos = NULL;
-		$this->db->select('idsocio');
+		$this->db->select('*');
 		$this->db->where('patrocinador', $idsocio);
+		$this->db->join('socios', 'socios.idsocio = codigo_socio.idsocio');
         $q = $this->db->get('codigo_socio');
         //echo $this->db->last_query();
         if($q->num_rows() > 0){
 			foreach ($q->result() as $value) {
-				$hijos[] = $value->idsocio;
+				$hijos[] = $value;
 			}
 			
         }
@@ -284,8 +263,8 @@ class Procesos_model extends CI_Model {
 
 	function _get_segundo_nivel($primero){
 		foreach ($primero as $value) {
-			if (isset($value) && $value !== NULL) {
-				$segundo[] = $this->_get_hijos($value);
+			if (isset($value->id) && $value->id !== NULL) {
+				$segundo[] = $this->_get_hijos($value->id);
 			}else{
 				$segundo[] = NULL;
 			}
@@ -294,16 +273,31 @@ class Procesos_model extends CI_Model {
 	}
 
 	function _get_siguiente_nivel($array){
-		foreach ($array as $value) {
-			if (isset($value)) {
-				foreach ($value as $v) {
-					if (isset($v) && $v !== NULL) {
-						$siguiente[] = $this->_get_hijos($v);
-					}
-				}
-			}else{
-				$siguiente[] = NULL;
+		$array_nuevo = $this->_arma__nivel($array);
+		//echo '<pre>'.var_export($array_nuevo, true).'</pre>';
+
+		foreach ($array_nuevo as $value) {
+			if (isset($value) && $value !== NULL) {
+				$siguiente[] = $this->_get_hijos($value->id);
 			}
+				
+		}
+
+		return $siguiente;
+	}
+
+	function _arma__nivel($array){
+		$siguiente = null;
+		foreach ($array as $value) {
+			if (isset($value) && $value !== NULL) {
+				foreach ($value as $v) {
+					if (isset($v->id) && $v->id !== NULL) {
+						$siguiente[] = $v;
+					}
+					
+				}
+			}
+				
 		}
 
 		return $siguiente;
@@ -320,96 +314,6 @@ class Procesos_model extends CI_Model {
 	 **/
 	function _get_red($socio) {
 		
-		//priner nivel
-		$primero = $this->_get_hijos($socio->idsocio);
-
-		//segundo nivel
-		foreach ($primero as $value) {
-			if (isset($value) && $value !== NULL) {
-				$segundo[] = $this->_get_hijos($value);
-			}else{
-				$segundo[] = NULL;
-			}
-		}
-
-		//Tercer nivel
-		foreach ($segundo as $value) {
-			if (isset($value)) {
-				foreach ($value as $v) {
-					if (isset($v) && $v !== NULL) {
-						$tercero[] = $this->_get_hijos($v);
-					}
-				}
-			}else{
-				$tercero[] = NULL;
-			}
-		}
-		
-		//Cuarto nivel
-		foreach ($tercero as $value) {
-			if (isset($value)) {
-				foreach ($value as $v) {
-					if (isset($v) && $v !== NULL) {
-						$cuarto[] = $this->_get_hijos($v);
-					}
-				}
-			}else{
-				$cuarto[] = NULL;
-			}
-		}
-		
-		//Quinto nivel
-		foreach ($cuarto as $value) {
-			if (isset($value) && $value !== NULL) {
-				foreach ($value as $v) {
-					if (isset($v) && $v !== NULL) {
-						$quinto[] = $this->_get_hijos($v);
-					}
-				}
-			}else{
-				$quinto[] = NULL;
-			}
-		}
-
-		//Sexto nivel
-		foreach ($quinto as $value) {
-			if (isset($value) && $value !== NULL) {
-				foreach ($value as $v) {
-					if (isset($v) && $v !== NULL) {
-						$sexto[] = $this->_get_hijos($v);
-					}
-				}
-			}else{
-				$sexto[] = NULL;
-			}
-		}
-
-		//Septimo nivel
-		foreach ($sexto as $value) {
-			if (isset($value) && $value !== NULL) {
-				foreach ($value as $v) {
-					if (isset($v) && $v !== NULL) {
-						$septimo[] = $this->_get_hijos($v);
-					}
-				}
-			}else{
-				$septimo[] = NULL;
-			}
-		}
-
-		//Octavo nivel
-		foreach ($septimo as $value) {
-			if (isset($value) && $value !== NULL) {
-				foreach ($value as $v) {
-					if (isset($v) && $v !== NULL) {
-						$octavo[] = $this->_get_hijos($v);
-					}
-				}
-			}else{
-				$octavo[] = NULL;
-			}
-		}
-
 		//$red = array_merge($red, $segundo, $tercero, $cuarto);
 		
 		echo '2<pre>'.var_export($segundo, true).'</pre>';

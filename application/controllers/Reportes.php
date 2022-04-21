@@ -475,8 +475,15 @@ class Reportes extends CI_Controller {
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
 			$data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
-			$data['red'] = $this->procesos_model->_get_red($data['socio']);
-			//echo '<pre>'.var_export($data['red'], true).'</pre>';
+			$data['nivel_1'] = $this->procesos_model->_get_hijos($idsocio);
+			$data['nivel_2'] = $this->procesos_model->_get_segundo_nivel($data['nivel_1']);
+			$data['nivel_3'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_2']);
+			$data['nivel_4'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_3']);
+			//$data['nivel_5'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_4']);
+			//echo '<pre>'.var_export($data['nivel_4'], true).'</pre>';
+			$data['title']='GTK Admin';
+            $data['main_content']='reportes/mi_red';
+            $this->load->view('includes/template', $data);
 		}else{
 			$this->index();
 		}
@@ -495,10 +502,11 @@ class Reportes extends CI_Controller {
 			$this->comisiones_model->_calcula_comisiones();
             $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
 
-			$data['primero'] = $this->procesos_model->_get_hijos($idsocio);
-			$data['segundo'] = $this->procesos_model->_get_segundo_nivel($data['primero']);
-			$data['tercero'] = $this->procesos_model->_get_siguiente_nivel($data['segundo']);
-			$data['cuarto'] = $this->procesos_model->_get_siguiente_nivel($data['tercero']);
+			$data['nivel_1'] = $this->procesos_model->_get_hijos($idsocio);
+			$data['nivel_2'] = $this->procesos_model->_get_segundo_nivel($data['nivel_1']);
+			$data['nivel_3'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_2']);
+			$data['nivel_4'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_3']);
+			$data['nivel_5'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_4']);
 
 
 			//echo '<pre>'.var_export($data['tercero'], true).'</pre>';
