@@ -464,6 +464,8 @@ class Inicio extends CI_Controller {
             $data['email'] = $this->input->post('email');
 			$data['cedula_patrocinador'] = $this->input->post('cedula_patrocinador');
 
+			$data['idpaquete'] = $this->input->post('idpaquete');
+
 			//Rol de socio
             $data['idrol'] = 3;
 
@@ -499,11 +501,11 @@ class Inicio extends CI_Controller {
 
 		public function paquete_check($str){
 			if ($str == '0'){
-					$this->form_validation->set_message('paquete_check', '<span id="error-message">ERROR: Debe elegir un paquete como su primera compra</span>');
-					return FALSE;
+				$this->form_validation->set_message('paquete_check', '<span id="error-message">ERROR: Debe elegir un paquete como su primera compra</span>');
+				return FALSE;
 			}
 			else{
-					return TRUE;
+				return TRUE;
 			}
         }
     

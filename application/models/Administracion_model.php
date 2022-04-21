@@ -427,6 +427,13 @@ class Administracion_model extends CI_Model {
 			$cod = $this->_set_codigo($socio);
 			$r = $cod;
 		}
+		
+		$data['id'] = $r;
+		
+		$data['idpaquete'] = $socio['idpaquete'];
+		//Registro primera compra
+		$this->compras_model->_set_compra($data);
+
 		$this->db->trans_complete();
 		if ($this->db->trans_status() == FALSE) {
         	$this->db->trans_rollback();
