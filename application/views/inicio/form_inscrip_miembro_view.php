@@ -77,7 +77,7 @@
 								foreach ($provincias as $key => $value) {
 									$dropdown_provincia[$value->idprovincia] = $value->provincia;
 								}
-								$js = 'id="id_provincia"; class="form-control"';
+								$js = 'id="id_provincia"; class="form-select form-control"';
 								echo form_dropdown('id_provincia', $dropdown_provincia, 'opcion1', $js);
 
 								/*Paso el base_url() a una variable PHP
@@ -127,14 +127,14 @@
 									$arr_banco[$value->idbanco] = $value->banco;
 								}
 
-								echo form_dropdown('banco', $arr_banco, '','id="id_banco" class="form-control info_patrocinador"');
+								echo form_dropdown('banco', $arr_banco, '','id="id_banco" class="form-select form-control"');
 							?>
 					</div>
 					</td>
 					<td>
 					<div class="mb-3">
 						<label for="tipo_cuenta">Tipo de cta:</label>
-						<select name="tipo_cuenta" class="form-control info_patrocinador" id="tipo_cuenta">
+						<select name="tipo_cuenta" class="form-select form-control" id="tipo_cuenta">
 							<option value="1" selected="">AHORROS</option>
 							<option value="2">CORRIENTE</option>
 						</select>
@@ -144,8 +144,22 @@
 				<tr>
 					<td>
 					<div class="mb-3" colspan="2">
-						<label for="celular">Cuenta bancaria:</label>
+						<label for="num_cta">Cuenta bancaria:</label>
 						<input type="text" class="form-control info_patrocinador" name="num_cta" placeholder="cuenta" id="cuenta_socio" value="<?php set_value('num_cta');?>">
+					</div>
+					</td>
+					<td>
+					<div class="mb-3" colspan="2">
+						<label for="paquete">Paquete:</label>
+						<select name="idpaquete" class="form-select form-control" id="paquete">
+							<option value="0" selected>Elija un paquete para su primera compra</option>
+							<?php 
+								foreach ($paquetes as $paquete) {
+									echo '<option value="'.$paquete->idpaquete.'">'.$paquete->paquete.'</option>';
+								}
+							?>
+						</select>
+						<?php echo form_error('idpaquete'); ?>
 					</div>
 					</td>
 				</tr>

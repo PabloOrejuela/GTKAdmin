@@ -355,13 +355,14 @@ class Inicio extends CI_Controller {
         $this->load->view('socios_select',$datos);
     }
 
-    function paquetes_codigo_select(){
-        $idcod_socio = $this->input->post('idcod_socio');
-        $idmatriz = 2;
-        $datos['paquetes'] = $this->administracion_model->_obten_paquetes($idmatriz);
-        $this->load->view('paquetes_codigo_select',$datos);
-    }
-
+	/**
+     * Muestra el form de inscripción
+     *
+     * @param Type string
+     * @return type void
+     * @author Pablo Orejuela
+     * @date 19-04-2022
+     **/
     function formulario_inscripcion_miembro($mensaje = ''){
 		$data['mensaje'] = $mensaje;
         $rol = $this->session->userdata('rol');
@@ -372,9 +373,12 @@ class Inicio extends CI_Controller {
             
 			//$data['socio'] = $this->administracion_model->_get_data_socio_by_id($this->session->userdata('id'));
 
+			$data['paquetes'] = $this->compras_model->_get_paquetes();
+			//echo '<pre>'.var_export($data['paquetes'], true).'</pre>';
             $data['provincias'] = $this->administracion_model->_get_provincias();
             $data['ciudades'] = $this->administracion_model->_get_ciudades();
             $data['bancos'] = $this->administracion_model->_get_bancos();
+
             $data['title'] ='GTK Admin';
             $data['main_content'] ='inicio/form_inscrip_miembro_view';
             $this->load->view('includes/template', $data);
@@ -441,14 +445,15 @@ class Inicio extends CI_Controller {
     function recibe_datos_frm_registro(){
 
         $this->form_validation->set_rules('cedula', 'Cédula', 'is_unique[socios.cedula]');
-        $this->form_validation->set_message('is_unique', '<span style="color:red;font-weight:bold;font-size:1em;">ERROR: Ya existe un socio registrado con este número de cédula</span>');
-        $this->form_validation->set_message('required', '<span style="color:red;font-weight:bold;font-size:1em;">ERROR: Este campo es obligatorio</span>');
+		$this->form_validation->set_rules('idpaquete', 'Paquete', 'callback_paquete_check');
+        $this->form_validation->set_message('is_unique', '<span id="error-message">ERROR: Ya existe un socio registrado con este número de cédula</span>');
+        $this->form_validation->set_message('required', '<span id="error-message">ERROR: Este campo es obligatorio</span>');
         if ($this->form_validation->run() == FALSE){
-			$this->formulario_inscripcion_miembro();
+			$this->formulario_inscripcion_miembro('Hubo un problema');
         }else{
 
 			//Establesco el rango dependiendo de la matriz
-            $data['idrango'] = 1;			}
+            $data['idrango'] = 1;			
 			$data['cedula'] = $this->input->post('cedula');
             $data['nombres'] = strtoupper($this->input->post('nombres'));
             $data['apellidos'] = strtoupper($this->input->post('apellidos'));
@@ -489,6 +494,17 @@ class Inicio extends CI_Controller {
 
 			$data['result'] = $this->administracion_model->_registrar_socio($data);
 			$this->exito_registro($data['result']);
+        }
+	}
+
+		public function paquete_check($str){
+			if ($str == '0'){
+					$this->form_validation->set_message('paquete_check', '<span id="error-message">ERROR: Debe elegir un paquete como su primera compra</span>');
+					return FALSE;
+			}
+			else{
+					return TRUE;
+			}
         }
     
 }

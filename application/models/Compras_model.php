@@ -215,10 +215,17 @@ class Compras_model extends CI_Model {
         }
 	}
 
+	/**
+     * Devuelve los paquetes disponibles para la compra
+     *
+     * @param Type void
+     * @return type object
+     * @author Pablo Orejuela
+     * @date 19-04-2022
+     **/
 	function _get_paquetes(){
 		
 		$this->db->select('*');
-		$this->db->where('idmatrices', 1);
 		$this->db->order_by('paquete', 'ASC');
 		$q = $this->db->get('paquetes');
 		if ($q->num_rows() > 0) {
