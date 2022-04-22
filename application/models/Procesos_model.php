@@ -262,27 +262,33 @@ class Procesos_model extends CI_Model {
 	}
 
 	function _get_segundo_nivel($primero){
-		foreach ($primero as $value) {
-			if (isset($value->id) && $value->id !== NULL) {
-				$segundo[] = $this->_get_hijos($value->id);
-			}else{
-				$segundo[] = NULL;
+		$segundo = NULL;
+		if (isset($primero) && $primero != NULL) {
+			foreach ($primero as $value) {
+				if (isset($value->id) && $value->id !== NULL) {
+					$segundo[] = $this->_get_hijos($value->id);
+				}else{
+					$segundo[] = NULL;
+				}
 			}
 		}
+		
 		return $segundo;
 	}
 
 	function _get_siguiente_nivel($array){
-		$array_nuevo = $this->_arma__nivel($array);
+		$siguiente = null;
 		//echo '<pre>'.var_export($array_nuevo, true).'</pre>';
-
-		foreach ($array_nuevo as $value) {
-			if (isset($value) && $value !== NULL) {
-				$siguiente[] = $this->_get_hijos($value->id);
+		if (isset($array[0]) && $array[0] != NULL) {
+			$array_nuevo = $this->_arma__nivel($array);
+			foreach ($array_nuevo as $value) {
+				if (isset($value) && $value !== NULL) {
+					$siguiente[] = $this->_get_hijos($value->id);
+				}		
 			}
-				
+		}else {
+			$siguiente[] = NULL;
 		}
-
 		return $siguiente;
 	}
 

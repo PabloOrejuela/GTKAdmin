@@ -479,6 +479,10 @@ class Reportes extends CI_Controller {
 			$data['nivel_2'] = $this->procesos_model->_get_segundo_nivel($data['nivel_1']);
 			$data['nivel_3'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_2']);
 			$data['nivel_4'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_3']);
+			$data['nivel_5'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_4']);
+			$data['nivel_6'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_5']);
+			$data['nivel_7'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_6']);
+			$data['nivel_8'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_7']);
 			//$data['nivel_5'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_4']);
 			//echo '<pre>'.var_export($data['nivel_4'], true).'</pre>';
 			$data['title']='GTK Admin';

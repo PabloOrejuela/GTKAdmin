@@ -21,7 +21,7 @@
 					<td id="td_resumen"><?php echo $socio->codigo_socio; ?></td>
 				<tr>
 					<td id="td_resumen"><strong>Patrocinados directos:</strong></td>
-					<td><?php echo count($primero);  ?> </td>
+					<td><?php echo count($nivel_1);  ?> </td>
 					<td id="td_resumen"></td>
 					<td id="td_resumen"></td>
 				</tr>

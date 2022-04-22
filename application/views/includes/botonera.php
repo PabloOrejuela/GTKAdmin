@@ -78,7 +78,7 @@
                       <li><a class="dropdown-item" href="https://youtu.be/V5Fe566NNDM" target="_blank">Como inscribir un Nuevo Socio</a></li>
                       <li><a class="dropdown-item" href="https://youtu.be/XdDyKmova00" target="_blank">Como realizar una compra</a></li>
                       <li><a class="dropdown-item" href="https://youtu.be/jsPwI74P_II" target="_blank">Cómo ingresar al Backoffice</a></li>
-											<li><a class="dropdown-item" href="#" target="_blank">Instructivo PDF</a></li>
+											<li><a class="dropdown-item" href="'.base_url().'images/GTK-Presentación.pdf" target="_blank">Instructivo PDF</a></li>
 											<li><a class="dropdown-item" href="http://www.gtk-ecuador.com">Ir a la web</a></li>
                     </ul>
                   </li>';
