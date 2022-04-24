@@ -261,6 +261,20 @@ class Compras_model extends CI_Model {
         }
 	}
 
+	function _get_data_paquete($idpaquete){
+        $paquetes = null;
+        $this->db->select('*');
+		$this->db->where('idpaquete', $idpaquete);
+        $this->db->order_by('paquete', 'ASC');
+        $q = $this->db->get('paquetes');
+        if ($q->num_rows() > 0) {
+            foreach ($q->result() as $r) {
+                $paquetes = $r;
+            }
+        }
+        return $paquetes;
+    }
+
 	function _obten_fecha_recompra($usuario){
 		foreach ($usuario as $u) {
 			//list($anio, $mes, $dia) =  explode('-', $u->fecha_inscripcion);
@@ -290,20 +304,22 @@ class Compras_model extends CI_Model {
 	 * @author Pablo Orejuela
 	 **/
 	function _set_compra($data){
-		/*
-		*	Se usa en las nuevas matrices
-		*/
-
+		
 		$this->db->trans_start();
 		$this->db->set('id', $data['id']);
 		$this->db->set('fecha', date('Y-m-d'));
 		$this->db->set('idpaquete', $data['idpaquete']);
 		$this->db->insert('compras');
+		$data['idcompras'] = $this->db->insert_id();
 		$this->db->trans_complete();
 		if ($this->db->trans_status() == FALSE) {
 			$this->db->trans_rollback();
 			return 0;
 		} else {
+			$paquete = $this->_get_data_paquete($data['idpaquete']);
+			//echo '<pre>'.var_export($data, true).'</pre>';
+			$data['bono'] = ($paquete->paquete)/2;
+			$this->_set_bono($data);
 			return 1;
 		}
 	}
@@ -319,8 +335,8 @@ class Compras_model extends CI_Model {
 		
 		$this->db->trans_start();
 		$this->db->set('idcompras', $data['idcompras']);
-		$this->db->set('cantidad', $data['cantidad']);
-		$this->db->set('patrocinador', $data['id']);
+		$this->db->set('bono', $data['bono']);
+		$this->db->set('patrocinador', $data['idpatrocinador']);
 		$this->db->insert('bono_inicio');
 		$this->db->trans_complete();
 		if ($this->db->trans_status() == FALSE) {

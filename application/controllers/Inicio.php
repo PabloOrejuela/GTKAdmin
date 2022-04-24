@@ -482,14 +482,14 @@ class Inicio extends CI_Controller {
 				$data['idbanco'] = $this->input->post('banco');
 			}
 
-			if (isset($data['cedula_patrocinador']) && $data['cedula_patrocinador'] != NULL && $data['cedula_patrocinador'] != '') {
-				$patrocinador = $this->administracion_model->_get_socio_by_cedula($data['cedula_patrocinador']);
-				$data['patrocinador'] = $patrocinador->idsocio;
-			}else{
-				//Patrocinador
-				$data['patrocinador'] = $this->session->userdata('id');
-			}
-
+			// if (isset($data['cedula_patrocinador']) && $data['cedula_patrocinador'] != NULL && $data['cedula_patrocinador'] != '') {
+			// 	$patrocinador = $this->administracion_model->_get_socio_by_cedula($data['cedula_patrocinador']);
+			// 	$data['patrocinador'] = $patrocinador->idsocio;
+			// }
+			//Patrocinador
+			$data['patrocinador'] = $this->session->userdata('id');
+			$data['idpatrocinador'] = $this->administracion_model->_get_codigo_socio_by_id($data['patrocinador']);
+			
 			$data['fecha_inscripcion'] = date('Y-m-d');
             $data['cod_provincia'] = $this->administracion_model->_get_cod_provincia($data['idprovincia']);
             $data['cod_socio'] = $this->administracion_model->_calcula_codigo($data);

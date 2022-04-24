@@ -502,7 +502,7 @@ class Reportes extends CI_Controller {
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
             
-			
+			//PABLO debo corregir para que traiga a los socios por el id del código no por el id de socio
 			
             $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
 
@@ -514,7 +514,7 @@ class Reportes extends CI_Controller {
 
 			$data['bono_inicio'] = $this->compras_model->_get_bono_inicio($data);
 
-			echo '<pre>'.var_export($data['compras_directas'], true).'</pre>';
+			//echo '<pre>'.var_export($data['compras_directas'], true).'</pre>';
 			
 			//Actualiza las comisiones
 			$this->comisiones_model->_calcula_comisiones($data);

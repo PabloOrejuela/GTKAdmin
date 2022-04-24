@@ -286,28 +286,18 @@ class Administracion_model extends CI_Model {
         }
 	}
 
-    function _get_codigo_socio_by_id($id_socio){
-        $codigos=null;
-        $this->db->select('*');
-        $this->db->where('codigo_socio.idcod_socio', $id_socio);
-        $this->db->join('matrices', 'matrices.idmatrices=codigo_socio.idmatrices');
-        $this->db->join('socios', 'socios.idsocio=codigo_socio.patrocinador');
+    function _get_codigo_socio_by_id($idsocio){
+        $codigo=null;
+        $this->db->select('id');
+        $this->db->where('codigo_socio.idsocio', $idsocio);
         $q = $this->db->get('codigo_socio');
         //echo $this->db->last_query();
         if ($q->num_rows() > 0) {
-        foreach ($q->result() as $r) {
-            $codigos['id_codigo'] = $r->idcod_socio;
-            $codigos['codigo'] = $r->codigo_socio;
-            $codigos['id_matriz'] = $r->idmatrices;
-            $codigos['matriz'] = $r->matriz;
-            $codigos['id_patrocinador'] = $r->patrocinador;
-            $codigos['fecha_inscripcion'] = $r->fecha_inscripcion;
-            $codigos['id_socio'] = $r->idsocio;
-        }
-            return $codigos;
-        }else{
-            return null;
-        }
+			foreach ($q->result() as $r) {
+				$codigo = $r->id;
+			}
+		}
+        return $codigo;
     }
 
     function _get_codigo_by_id_codigo($idcodigo){
@@ -342,28 +332,26 @@ class Administracion_model extends CI_Model {
 	 * @return type void
 	 * @throws conditon
 	 **/
-	public function _registrar_socio($socio){
+	function _registrar_socio($data){
 		$r = NULL;
 		$this->db->trans_start();
 		//Registro el Socio
-		$socio['idsocio'] = $this->_set_socio($socio);
+		$data['idsocio'] = $this->_set_socio($data);
 
 		//Registro los datos del banco
-		if ($socio['idsocio']) {
-			$cta = $this->_set_cta_socio($socio);
+		if ($data['idsocio']) {
+			$cta = $this->_set_cta_socio($data);
 		}
 		
 		if ($cta) {
-			$cod = $this->_set_codigo($socio);
+			$cod = $this->_set_codigo($data);
 			$r = $cod;
 		}
 		
 		$data['id'] = $r;
-		
-		$data['idpaquete'] = $socio['idpaquete'];
+
 		//Registro primera compra
 		$this->compras_model->_set_compra($data);
-		$this->compras_model->_set_bono($data);
 
 		$this->db->trans_complete();
 		if ($this->db->trans_status() == FALSE) {
@@ -428,7 +416,7 @@ class Administracion_model extends CI_Model {
 	function _set_codigo($data){
 		$this->db->trans_start();
 		$this->db->set('codigo_socio', $data['cod_socio']);
-		$this->db->set('patrocinador', $data['patrocinador']);
+		$this->db->set('patrocinador', $data['idpatrocinador']);
 		$this->db->set('fecha_inscripcion', date('Y-m-d'));
 		$this->db->set('idsocio', $data['idsocio']);
 		$this->db->set('idrango', 1);
