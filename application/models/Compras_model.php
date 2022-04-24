@@ -192,17 +192,16 @@ class Compras_model extends CI_Model {
 
 
 	/**
-	 * undocumented function
+	 * Extrae la ultima compra de la tabla
 	 *
 	 * @return void
 	 * @author
 	 **/
-	function _get_ultima_compra($id_codigo, $fecha, $paquete){
+	function _get_ultima_compra($id, $fecha){
 		$r = 0;
 		$this->db->select('idcompras');
-		$this->db->where('idcod_socio', $id_codigo);
+		$this->db->where('id', $id);
 		$this->db->where('fecha', $fecha);
-		$this->db->where('idpaquete', $paquete);
         $q = $this->db->get('compras');
         if($q->result() > 0){
             foreach ($q->result() as $row) {
@@ -214,6 +213,30 @@ class Compras_model extends CI_Model {
         	return 0;
         }
 	}
+
+	/**
+	 * Extrae la primera compra de la tabla compras sin pagar
+	 *
+	 * @return void
+	 * @author Pablo Orejuela
+	 * @date 23-04-2022
+	 **/
+	function _get_first_compra($id){
+		$r = null;
+		$this->db->select('*');
+		$this->db->where('id', $id);
+		$this->db->join('paquetes', 'paquetes.idpaquete=compras.idpaquete');
+		$this->db->order_by('idcompras', 'asc');
+        $q = $this->db->get('compras', 1);
+        if($q->result() > 0){
+            foreach ($q->result() as $row) {
+                $r[] = $row;
+            }
+        }
+        return $r;
+	}
+
+	
 
 	/**
      * Devuelve los paquetes disponibles para la compra
@@ -267,93 +290,46 @@ class Compras_model extends CI_Model {
 	 * @author Pablo Orejuela
 	 **/
 	function _set_compra($data){
-            /*
-            *	Se usa en las nuevas matrices
-            */
+		/*
+		*	Se usa en las nuevas matrices
+		*/
 
-            $this->db->trans_start();
-            $this->db->set('id', $data['id']);
-            $this->db->set('fecha', date('Y-m-d'));
-			$this->db->set('idpaquete', $data['idpaquete']);
-            $this->db->insert('compras');
-            $this->db->trans_complete();
-            if ($this->db->trans_status() == FALSE) {
-                $this->db->trans_rollback();
-                return 0;
-            } else {
-        		return 1;
-            }
-	}
-
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 * @author Orejuela
-	 **/
-	function _get_recompras_mes($mes){
-		$anio = date('Y');
-		$r = NULL;
-		$this->db->select(
-			'codigo_socio_binario.idcodigo_socio_binario,paquetes.idpaquete,
-			codigo_socio_binario,paquete,fecha,nombres,apellidos,litros'
-		);
-		$this->db->where('MONTH(fecha)', $mes);
-		$this->db->where('YEAR(fecha)', $anio);
-		$this->db->where('pago', 1);
-		$this->db->join('paquetes', 'paquetes.idpaquete = compras_binario.idpaquete');
-		$this->db->join('codigo_socio_binario', 'codigo_socio_binario.idcodigo_socio_binario = compras_binario.idcodigo_socio_binario');
-		$this->db->join('socios', 'socios.idsocio = codigo_socio_binario.idsocio');
-		$q = $this->db->get('compras_binario');
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-                $r[] = $row;
-			}
-			return $r;
-		}else{
+		$this->db->trans_start();
+		$this->db->set('id', $data['id']);
+		$this->db->set('fecha', date('Y-m-d'));
+		$this->db->set('idpaquete', $data['idpaquete']);
+		$this->db->insert('compras');
+		$this->db->trans_complete();
+		if ($this->db->trans_status() == FALSE) {
+			$this->db->trans_rollback();
 			return 0;
+		} else {
+			return 1;
 		}
 	}
 
-
 	/**
-	 * undocumented function
+	 * Graba el bono inicio de la primera compra de un socio nuevo
 	 *
 	 * @return void
 	 * @author Pablo Orejuela
+	 * @date 23-04-2022
 	 **/
-	function _get_recompras_mes_anterior($mes_actual){
-		$anio = date('Y');
-		$mes = ($mes_actual-1);
-
-		$r = NULL;
-		$this->db->select(
-			'codigo_socio_binario.idcodigo_socio_binario,paquetes.idpaquete,
-			codigo_socio_binario,paquete,fecha,nombres,apellidos,litros'
-		);
-		if ($mes == 0) {
-			$this->db->where('MONTH(fecha)', 12);
-			$anio = $anio-1;
-		}else{
-			$this->db->where('MONTH(fecha)', $mes);
-		}
+	function _set_bono($data){
 		
-		$this->db->where('YEAR(fecha)', $anio);
-		$this->db->where('pago', 1);
-		$this->db->join('paquetes', 'paquetes.idpaquete = compras_binario.idpaquete');
-		$this->db->join('codigo_socio_binario', 'codigo_socio_binario.idcodigo_socio_binario = compras_binario.idcodigo_socio_binario');
-		$this->db->join('socios', 'socios.idsocio = codigo_socio_binario.idsocio');
-		$q = $this->db->get('compras_binario');
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-                $r[] = $row;
-			}
-			return $r;
-		}else{
+		$this->db->trans_start();
+		$this->db->set('idcompras', $data['idcompras']);
+		$this->db->set('cantidad', $data['cantidad']);
+		$this->db->set('patrocinador', $data['id']);
+		$this->db->insert('bono_inicio');
+		$this->db->trans_complete();
+		if ($this->db->trans_status() == FALSE) {
+			$this->db->trans_rollback();
 			return 0;
+		} else {
+			return 1;
 		}
 	}
-
 
 
     /**
@@ -375,52 +351,6 @@ class Compras_model extends CI_Model {
         }
 
     }
-
-
-	/**
-	 * Esta funcion inserta los litros extra que gana el patrocinador con la compra que
-	 * realiza su patrocinado
-	 *
-	 * @return void
-	 * @author
-	 **/
-	function _insert_litros_ganados($id_codigo, $idcompras, $paquete, $litros){
-
-		//Verificar si es recompra o optativa, solo en optativa gana el patrocinbador 1 litro
-		$this->db->trans_start();
-		$this->db->set('idcod_socio', $id_codigo);
-		$this->db->set('litros_ganados', $litros);
-		//$this->db->where('idsocio', $idsocio);
-		$this->db->set('idcompras', $idcompras);
-		$this->db->insert('litros_ganados');
-		$this->db->trans_complete();
-        if ($this->db->trans_status() == FALSE) {
-        	$this->db->trans_rollback();
-            return 0;
-        } else {
-            return 1;
-        }
-	}
-
-    /**
-     * Extrae el bono que corresponda al paquete que compró
-     *
-     * @return double
-     * @author Pablo Orejuela
-     */
-    function _obten_bono_paquete($paquete){
-        $this->db->select('bono');
-        $this->db->where('paquete', $paquete);
-        $q = $this->db->get('paquetes');
-        if ($q->num_rows() == 1) {
-            foreach ($q->result() as $r) {
-                $bono = $r->bono;
-            }
-            return $bono;
-        }else{
-            return 0;
-        }
-	}
 	
 }
 

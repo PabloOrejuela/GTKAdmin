@@ -20,25 +20,6 @@ class Administracion_model extends CI_Model {
         return $ciudades;
 	}
 
-    /**
-     * Esta función verifica las compras de los codigos principales de CARLOS
-     *
-     * @return bool
-     * @author Pablo Orejuela
-     **/
-    function _get_compras_principales($idcodigo_socio_binario){
-        $mes = date('m');
-
-        $this->db->select('idcompras_binario');
-        $this->db->where('MONTH(fecha)', $mes);
-        $this->db->where('idcodigo_socio_binario', $idcodigo_socio_binario);
-        $q = $this->db->get('compras_binario');
-        if ($q->num_rows() > 0) {
-            return 1;
-        }else{
-            return 0;
-        }
-    }
     
     /**
      * Esta función verifica las compras de los codigos principales de CARLOS
@@ -131,22 +112,6 @@ class Administracion_model extends CI_Model {
 
         }
         return $provincia;
-	}
-
-	function _get_matrices(){
-		$matriz=null;
-		$this->db->select('*');
-		$this->db->where('idmatrices >', 3);
-		$q = $this->db->get('matrices');
-		//echo $this->db->last_query();
-		if ($q->num_rows() >0) {
-            foreach ($q->result() as $r) {
-                $matriz[] = $r;
-            }
-            return $matriz;
-        }else{
-        	return 0;
-        }
 	}
 
 	function _get_bancos(){
@@ -293,41 +258,6 @@ class Administracion_model extends CI_Model {
             return $codigos;
         }
     }
-
-    function _get_codigos_binarios_by_socio($id_socio){
-        $codigos=null;
-        $this->db->select('*');
-        $this->db->where('codigo_socio_binario.idsocio', $id_socio);
-        $this->db->join('socios', 'socios.idsocio=codigo_socio_binario.idsocio');
-        $this->db->join('rangos', 'rangos.idrango=codigo_socio_binario.idrango');
-        $this->db->order_by('idcodigo_socio_binario', 'asc');
-        $q = $this->db->get('codigo_socio_binario');
-        if ($q->num_rows() > 0) {
-            foreach ($q->result() as $r) {
-                $codigos[] = $r;
-            }
-            
-            return $codigos;
-        }else{
-            return $codigos;
-        }
-    }
-
-    function _get_codigo_binario_by_idcodigo($idcod_socio){
-        $codigo=null;
-        $this->db->select('codigo_socio_binario');
-        $this->db->where('idcodigo_socio_binario', $idcod_socio);
-        $q = $this->db->get('codigo_socio_binario');
-        if ($q->num_rows() > 0) {
-            foreach ($q->result() as $r) {
-                $codigo = $r->codigo_socio_binario;
-            }
-            return $codigo;
-        }else{
-            return $codigo;
-        }
-    }
-
     
 
 	/**
@@ -433,6 +363,7 @@ class Administracion_model extends CI_Model {
 		$data['idpaquete'] = $socio['idpaquete'];
 		//Registro primera compra
 		$this->compras_model->_set_compra($data);
+		$this->compras_model->_set_bono($data);
 
 		$this->db->trans_complete();
 		if ($this->db->trans_status() == FALSE) {

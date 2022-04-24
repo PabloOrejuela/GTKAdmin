@@ -2,8 +2,21 @@
 
 class Comisiones_model extends CI_Model {
 
-	function _calcula_comisiones(){
-		echo "Comisiones calculadas";
+	public function __construct(){
+        parent::__construct();
+        $this->load->model('compras_model');
+    }
+
+	function _calcula_comisiones($data){
+		
+		//echo 'Primero: '.count($data['nivel_1']);
+
+		
+
+		//Si tiene 1 activo puede comisionar hasta el tercer nivel
+
+		//echo '<pre>'.var_export($compras, true).'</pre>';
+		
 	}
 	
 

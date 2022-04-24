@@ -502,8 +502,8 @@ class Reportes extends CI_Controller {
         $is_logged = $this->session->userdata('is_logged_in');
         if (isset($is_logged) == true || isset($is_logged) == 1) {
             
-			//Actualizo las comisiones
-			$this->comisiones_model->_calcula_comisiones();
+			
+			
             $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
 
 			$data['nivel_1'] = $this->procesos_model->_get_hijos($idsocio);
@@ -512,9 +512,13 @@ class Reportes extends CI_Controller {
 			$data['nivel_4'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_3']);
 			$data['nivel_5'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_4']);
 
+			$data['bono_inicio'] = $this->compras_model->_get_bono_inicio($data);
 
-			//echo '<pre>'.var_export($data['tercero'], true).'</pre>';
+			echo '<pre>'.var_export($data['compras_directas'], true).'</pre>';
 			
+			//Actualiza las comisiones
+			$this->comisiones_model->_calcula_comisiones($data);
+
             $data['title']='GTK Admin';
             $data['main_content']='reportes/resumen_financiero_view';
             $this->load->view('includes/template', $data);

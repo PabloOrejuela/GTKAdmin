@@ -61,7 +61,7 @@
 					<select class="form-select form-select-md mb-3" aria-label=".form-select-lg example" name="idpaquete">
 						<?php
 							foreach ($paquetes as $key => $value) {
-								echo '<option value="'.$value->idpaquete.'">$ '.number_format($value->paquete, 2).'</option>';
+								echo '<option value="'.$value->idpaquete.'">$ '.number_format($value->pvp, 2).'</option>';
 							}
 						?>
 					</select>

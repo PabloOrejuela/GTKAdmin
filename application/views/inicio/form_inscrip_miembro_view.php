@@ -155,7 +155,7 @@
 							<option value="0" selected>Elija un paquete para su primera compra</option>
 							<?php 
 								foreach ($paquetes as $paquete) {
-									echo '<option value="'.$paquete->idpaquete.'">'.$paquete->paquete.'</option>';
+									echo '<option value="'.$paquete->idpaquete.'">'.$paquete->pvp.'</option>';
 								}
 							?>
 						</select>
