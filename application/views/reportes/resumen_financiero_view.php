@@ -21,14 +21,38 @@
 					<td id="td_resumen"><?php echo $socio->codigo_socio; ?></td>
 				<tr>
 					<td id="td_resumen"><strong>Patrocinados directos:</strong></td>
-					<td><?php echo count($nivel_1);  ?> </td>
+					<td><?php echo count($nivel_1);  ?></td>
+					<td id="td_resumen"><strong>Total Miembros:</strong></td>
+					<td id="td_resumen"><?php echo $total_miembros.' miembros'; ?></td>
+				</tr>
+				<tr>
+					<td id="td_resumen"><strong>Total miembros activos:</strong></td>
+					<td><?php echo $red_activos !== NULL ? count($red_activos) : 0 ; ?></td>
 					<td id="td_resumen"></td>
 					<td id="td_resumen"></td>
 				</tr>
-				<?php
-					
-					
-				?>
+			</tbody>
+		</table>
+		<br />
+		<table class="table table-light table-striped">
+			<tbody>
+				<thead>
+					<tr>
+						<th></th>
+						<th style="text-align: right;">Puntos</th>
+						<th style="text-align: right;">Total</th>
+					</tr>
+				</thead>
+				<tr>
+					<td><strong>Bonos Inicio Rápido:</strong></td>
+					<td style="text-align: right;"></td>
+					<td style="text-align: right;"><?php echo'$ '. $bono_inicio; ?></td>
+				</tr>
+				<tr>
+					<td><strong>Compras del periodo:</strong></td>
+					<td style="text-align: right;"></td>
+					<td style="text-align: right;"><?php echo'$ '. $compras; ?></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

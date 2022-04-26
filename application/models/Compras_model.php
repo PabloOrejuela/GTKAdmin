@@ -215,6 +215,28 @@ class Compras_model extends CI_Model {
 	}
 
 	/**
+	 * Extrae las  compras de la tabla
+	 *
+	 * @return void
+	 * @author
+	 **/
+	function _get_compras_mes($id){
+		$r = 0;
+		$mes_actual = date('m');
+		$this->db->select('idcompras');
+		$this->db->where('id', $id);
+		$this->db->where('pago', 1);
+		$this->db->where('MONTH(fecha)', $mes_actual);
+        $q = $this->db->get('compras');
+        if($q->result() > 0){
+            foreach ($q->result() as $row) {
+                $r = $row->idcompras;
+            }
+        }
+        return $r;
+	}
+
+	/**
 	 * Extrae la primera compra de la tabla compras sin pagar
 	 *
 	 * @return void
@@ -236,7 +258,28 @@ class Compras_model extends CI_Model {
         return $r;
 	}
 
-	
+	/**
+	 * Extrae la suma de las compras por cobrar
+	 *
+	 * @return void
+	 * @author Pablo Orejuela
+	 * @date 23-04-2022
+	 **/
+	function _get_compras_cobrar($id){
+		$compras = null;
+		$this->db->select('SUM(paquete) as compras');
+		$this->db->where('id', $id);
+		$this->db->where('pago', 0);
+		$this->db->join('paquetes', 'paquetes.idpaquete=compras.idpaquete');
+		$this->db->order_by('idcompras', 'asc');
+        $q = $this->db->get('compras');
+        if($q->result() > 0){
+            foreach ($q->result() as $row) {
+                $compras = $row->compras;
+            }
+        }
+        return $compras;
+	}
 
 	/**
      * Devuelve los paquetes disponibles para la compra
@@ -354,11 +397,11 @@ class Compras_model extends CI_Model {
 	 * @return type decimal
 	 * @fecha 25-04-2022
 	 **/
-	function _get_bono_inicio($socio){
+	function _get_bono_inicio($id){
 		//echo '<pre>'.var_export($socio, true).'</pre>';
 		$bono = null;
         $this->db->select('SUM(bono) as bono');
-		$this->db->where('patrocinador', $socio->id);
+		$this->db->where('patrocinador', $id);
 		$this->db->where('pagado', 0);
         $q = $this->db->get('bono_inicio');
         if ($q->num_rows() > 0) {

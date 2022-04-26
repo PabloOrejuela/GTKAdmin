@@ -149,19 +149,23 @@
 					</div>
 					</td>
 					<td>
-					<div class="mb-3" colspan="2">
-						<label for="paquete">Paquete:</label>
-						<select name="idpaquete" class="form-select form-control" id="paquete">
-							<option value="0" selected>Elija un paquete para su primera compra</option>
-							<?php 
-								foreach ($paquetes as $paquete) {
-									echo '<option value="'.$paquete->idpaquete.'">'.$paquete->pvp.'</option>';
-								}
-							?>
-						</select>
-						<?php echo form_error('idpaquete'); ?>
-					</div>
+						<div class="mb-3" colspan="2">
+							<label for="paquete">Paquete *:</label>
+							<select name="idpaquete" class="form-select form-control" id="paquete">
+								<option value="0" selected>Elija un paquete para su primera compra</option>
+								<?php 
+									foreach ($paquetes as $paquete) {
+										echo '<option value="'.$paquete->idpaquete.'">$ '.$paquete->pvp.'</option>';
+									}
+								?>
+							</select>
+							<?php echo form_error('idpaquete'); ?>
+						</div>
 					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>*Nota: Recuerde que en la primera compra se deben $10 extra por la membresía, este pago es anual</td>s
 				</tr>
 				<tr>
 					<td><button type="submit" class="btn btn-primary">Enviar</button></td>

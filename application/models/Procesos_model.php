@@ -174,11 +174,11 @@ class Procesos_model extends CI_Model {
 	 * @return array
 	 * @author Pablo Orejuela
 	 **/
-	function _get_compras_patrocinados($idsocio){
+	function _get_compras_patrocinados($id){
 		$patrocinados = null;
 		$mes_actual = date('m');
 		$this->db->select_sum('puntos');
-		$this->db->where('patrocinador', $idsocio); 
+		$this->db->where('patrocinador', $id); 
 		$this->db->where('MONTH(fecha)', $mes_actual);
 		$this->db->where('pago', 1);
 		$this->db->join('compras', 'compras.id = codigo_socio.id');
@@ -215,7 +215,7 @@ class Procesos_model extends CI_Model {
 		return $patro;
 	}
 
-	
+
 
 	/**
 	 * Extrae los patrocinados directos
@@ -223,32 +223,11 @@ class Procesos_model extends CI_Model {
 	 * @return array
 	 * @author Pablo Orejuela
 	 **/
-	function _get_hijos_activos($idsocio){
-		//$idrango = $this->_get_rango_idcodigo($idcod_socio);
-		$hijos = NULL;
-		$this->db->select('idsocio');
-		$this->db->where('patrocinador', $idsocio);
-        $q = $this->db->get('codigo_socio');
-        //echo $this->db->last_query();
-        if($q->num_rows() > 0){
-			foreach ($q->result() as $value) {
-				$hijos[] = $value->idsocio;
-			}	
-        }
-		return $hijos;
-	}
-
-	/**
-	 * Extrae los patrocinados directos
-	 *
-	 * @return array
-	 * @author Pablo Orejuela
-	 **/
-	function _get_hijos($idsocio){
+	function _get_hijos($id){
 		
 		$hijos = NULL;
 		$this->db->select('*');
-		$this->db->where('patrocinador', $idsocio);
+		$this->db->where('patrocinador', $id);
 		$this->db->join('socios', 'socios.idsocio = codigo_socio.idsocio');
         $q = $this->db->get('codigo_socio');
         //echo $this->db->last_query();
@@ -261,16 +240,19 @@ class Procesos_model extends CI_Model {
 		return $hijos;
 	}
 
-	function _get_segundo_nivel($primero){
+	function _get_segundo_nivel($array){
+		
 		$segundo = NULL;
-		if (isset($primero) && $primero != NULL) {
-			foreach ($primero as $value) {
-				if (isset($value->id) && $value->id !== NULL) {
+		if (isset($array) && $array != NULL) {
+			//$array_nuevo = $this->_arma_segundo_nivel($array);
+			//echo '<pre>'.var_export($array, true).'</pre>';
+			foreach ($array as $value) {
+				if (isset($value) && $value !== NULL) {
 					$segundo[] = $this->_get_hijos($value->id);
-				}else{
-					$segundo[] = NULL;
 				}
 			}
+		}else {
+			$segundo[] = NULL;
 		}
 		
 		return $segundo;
@@ -278,7 +260,7 @@ class Procesos_model extends CI_Model {
 
 	function _get_siguiente_nivel($array){
 		$siguiente = null;
-		//echo '<pre>'.var_export($array_nuevo, true).'</pre>';
+		//echo '<pre>'.var_export($array, true).'</pre>';
 		if (isset($array[0]) && $array[0] != NULL) {
 			$array_nuevo = $this->_arma__nivel($array);
 			foreach ($array_nuevo as $value) {
@@ -305,7 +287,18 @@ class Procesos_model extends CI_Model {
 			}
 				
 		}
+		return $siguiente;
+	}
 
+	function _arma_segundo_nivel($array){
+		//echo '<pre>'.var_export($array, true).'</pre>';
+		$siguiente = null;
+		foreach ($array as $value) {
+			if (isset($value) && $value !== NULL) {
+				$siguiente[] = $value;	
+			}
+				
+		}
 		return $siguiente;
 	}
 
@@ -318,18 +311,102 @@ class Procesos_model extends CI_Model {
 	 * @return type array
 	 * @throws conditon
 	 **/
-	function _get_red($socio) {
+	function _cuenta_miembros_red($red) {
 		
-		//$red = array_merge($red, $segundo, $tercero, $cuarto);
-		
-		echo '2<pre>'.var_export($segundo, true).'</pre>';
-		echo '3<pre>'.var_export($tercero, true).'</pre>';
-		echo '4<pre>'.var_export($cuarto, true).'</pre>';
-		echo '5<pre>'.var_export($quinto, true).'</pre>';
-		echo '6<pre>'.var_export($sexto, true).'</pre>';
-		echo '7<pre>'.var_export($septimo, true).'</pre>';
+		return count($red);
+	}
 
-		//return array_filter($red);
+	/**
+	 * Cuenta todos los socios activos de la red
+	 *
+	 *
+	 * @param Type Object
+	 * @return type array
+	 * @throws conditon
+	 **/
+	function _get_red($id) {
+		$total = 0;
+		//$red = NULL;
+		//PABLO hacer esto en un blucle
+		
+		$nivel_1 = $this->procesos_model->_get_hijos($id);
+		$nivel_2 = $this->_get_segundo_nivel($nivel_1);
+		$segundo = $this->_arma__nivel($nivel_2);
+
+		$nivel_3 = $this->_get_siguiente_nivel($nivel_2);
+		$tercero = $this->_arma__nivel($nivel_3);
+
+		$nivel_4 = $this->_get_siguiente_nivel($nivel_3);
+		$cuarto = $this->_arma__nivel($nivel_4);
+
+		$nivel_5 = $this->_get_siguiente_nivel($nivel_4);
+		$quinto = $this->_arma__nivel($nivel_5);
+		
+		$nivel_6 = $this->_get_siguiente_nivel($nivel_5);
+		$sexto = $this->_arma__nivel($nivel_6);
+
+		$nivel_7 = $this->_get_siguiente_nivel($nivel_6);
+		$septimo = $this->_arma__nivel($nivel_7);
+
+		$nivel_8 = $this->_get_siguiente_nivel($nivel_7);
+		$octavo = $this->_arma__nivel($nivel_8);
+
+		$nivel_9 = $this->_get_siguiente_nivel($nivel_8);
+		$noveno = $this->_arma__nivel($nivel_9);
+
+		if ($nivel_1) {
+			$red = array_merge($nivel_1);
+		}
+
+		if ($segundo) {
+			$red = array_merge($red, $segundo);
+		}
+
+		if ($tercero) {
+			$red = array_merge($red, $tercero);
+		}
+
+		if ($cuarto) {
+			$red = array_merge($red, $cuarto);
+		}
+
+		if ($quinto) {
+			$red = array_merge($red, $quinto);
+		}
+
+		if ($sexto) {
+			$red = array_merge($red, $sexto);
+		}
+
+		if ($septimo) {
+			$red = array_merge($red, $septimo);
+		}
+
+		if ($octavo) {
+			$red = array_merge($red, $octavo);
+		}
+
+		if ($noveno) {
+			$red = array_merge($red, $noveno);
+		}
+		
+		//echo '<pre>'.var_export($red, true).'</pre>';
+
+		return $red;
+	}
+
+	function _get_red_activos($red){
+		$r = 0;
+		if (isset($red) && $red !== NULL) {
+			foreach ($red as $key => $value) {
+				$r = $this->compras_model->_get_compras_mes($value->id);
+				if ($r > 0) {
+					$activos[] = $value->id;
+				}
+			}
+		}
+		//echo '<pre>'.var_export($activos, true).'</pre>';
+		return $activos;
 	}
 
 	/**
@@ -340,7 +417,6 @@ class Procesos_model extends CI_Model {
 	 **/
 	function _get_posicion_max(){
 		$this->db->select_max('idsocio');
-		$this->db->where('idmatrices', $matriz);
 		$q = $this->db->get('codigo_socio');
 		if ($q->num_rows() == 1) {
 			foreach ($q->result() as $value) {

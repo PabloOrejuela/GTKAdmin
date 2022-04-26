@@ -507,15 +507,15 @@ class Reportes extends CI_Controller {
 			
             $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
 			$data['id'] = $this->administracion_model->_get_codigo_socio_by_id($idsocio);
+			$data['red'] = $this->procesos_model->_get_red($data['id']);
+			$data['total_miembros'] = $this->procesos_model->_cuenta_miembros_red($data['red']);
+			$data['red_activos'] = $this->procesos_model->_get_red_activos($data['red']);
+
+			$data['bono_inicio'] = $this->compras_model->_get_bono_inicio($data['id']);
+			$data['compras'] = $this->compras_model->_get_compras_cobrar($data['id']);
 			$data['nivel_1'] = $this->procesos_model->_get_hijos($data['id']);
-			$data['nivel_2'] = $this->procesos_model->_get_segundo_nivel($data['nivel_1']);
-			$data['nivel_3'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_2']);
-			$data['nivel_4'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_3']);
-			$data['nivel_5'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_4']);
 
-			$data['bono_inicio'] = $this->compras_model->_get_bono_inicio($data['socio']);
-
-			//echo '<pre>'.var_export($data['nivel_2'], true).'</pre>';
+			//echo '<pre>'.var_export($data['num_socios_activos'], true).'</pre>';
 			
 			//Actualiza las comisiones
 			$this->comisiones_model->_calcula_comisiones($data);
