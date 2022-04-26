@@ -244,7 +244,7 @@ class Procesos_model extends CI_Model {
 	 * @return array
 	 * @author Pablo Orejuela
 	 **/
-	function _get_hijos($idsocio){echo $idsocio;
+	function _get_hijos($idsocio){
 		
 		$hijos = NULL;
 		$this->db->select('*');

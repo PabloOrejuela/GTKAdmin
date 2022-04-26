@@ -506,16 +506,16 @@ class Reportes extends CI_Controller {
 			//PABLO debo corregir para que traiga a los socios por el id del código no por el id de socio
 			
             $data['socio'] = $this->socios_model->_get_socio_by_id($idsocio);
-
-			$data['nivel_1'] = $this->procesos_model->_get_hijos($idsocio);
+			$data['id'] = $this->administracion_model->_get_codigo_socio_by_id($idsocio);
+			$data['nivel_1'] = $this->procesos_model->_get_hijos($data['id']);
 			$data['nivel_2'] = $this->procesos_model->_get_segundo_nivel($data['nivel_1']);
 			$data['nivel_3'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_2']);
 			$data['nivel_4'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_3']);
 			$data['nivel_5'] = $this->procesos_model->_get_siguiente_nivel($data['nivel_4']);
 
-			$data['bono_inicio'] = $this->compras_model->_get_bono_inicio($data);
+			$data['bono_inicio'] = $this->compras_model->_get_bono_inicio($data['socio']);
 
-			//echo '<pre>'.var_export($data['compras_directas'], true).'</pre>';
+			//echo '<pre>'.var_export($data['nivel_2'], true).'</pre>';
 			
 			//Actualiza las comisiones
 			$this->comisiones_model->_calcula_comisiones($data);

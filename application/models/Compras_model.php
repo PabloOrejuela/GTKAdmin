@@ -347,6 +347,28 @@ class Compras_model extends CI_Model {
 		}
 	}
 
+	/**
+	 * Devuelve la suma de los importes de los BIR
+	 *
+	 * @param Type $array
+	 * @return type decimal
+	 * @fecha 25-04-2022
+	 **/
+	function _get_bono_inicio($socio){
+		//echo '<pre>'.var_export($socio, true).'</pre>';
+		$bono = null;
+        $this->db->select('SUM(bono) as bono');
+		$this->db->where('patrocinador', $socio->id);
+		$this->db->where('pagado', 0);
+        $q = $this->db->get('bono_inicio');
+        if ($q->num_rows() > 0) {
+            foreach ($q->result() as $r) {
+                $bono = $r->bono;
+            }
+        }
+        return $bono;
+	}
+
 
     /**
      * Elimina las compras de la tabla compras

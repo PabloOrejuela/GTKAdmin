@@ -27,15 +27,7 @@
 				</tr>
 				<?php
 					
-					foreach ($compras_directas as $key => $value) {
-						
-						foreach ($value as $key => $v) {
-							//echo '<pre>'.var_export($v, true).'</pre>';
-							if ($v->pago === '0') {
-								echo $v->idcompras;
-							}
-						}
-					}
+					
 				?>
 			</tbody>
 		</table>
