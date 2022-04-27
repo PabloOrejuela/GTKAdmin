@@ -145,6 +145,8 @@
 
 							$total = $puntos + $bono_inicio + $subtotal_primero + $subtotal_segundo 
 								+ $subtotal_tercero;
+
+							$total_puntos = $puntos + $puntos_primero + $puntos_segundo + $puntos_tercero;
 	
 							echo '<tr>
 								<td><strong>Primer nivel:</strong></td>
@@ -175,6 +177,9 @@
 
 							$total = $puntos + $bono_inicio + $subtotal_primero + $subtotal_segundo 
 								+ $subtotal_tercero + $subtotal_cuarto + $subtotal_quinto;
+
+							$total_puntos = $puntos + $puntos_primero + $puntos_segundo + $puntos_tercero
+								+ $puntos_cuarto + $puntos_quinto;
 	
 							echo '<tr>
 								<td><strong>1ro. nivel:</strong></td>
@@ -215,6 +220,9 @@
 							//Niveles 6 y 7
 							$total = $puntos + $bono_inicio + $subtotal_primero + $subtotal_segundo 
 								+ $subtotal_tercero + $subtotal_cuarto + $subtotal_quinto + $subtotal_sexto + $subtotal_septimo;
+
+							$total_puntos = $puntos + $puntos_primero + $puntos_segundo + $puntos_tercero
+								+ $puntos_cuarto + $puntos_quinto + $puntos_sexto + $puntos_septimo;
 
 							echo '<tr>
 								<td><strong>1ro. nivel:</strong></td>
@@ -265,6 +273,9 @@
 							$total = $puntos + $bono_inicio + $subtotal_primero + $subtotal_segundo 
 								+ $subtotal_tercero + $subtotal_cuarto + $subtotal_quinto + $subtotal_sexto 
 								+ $subtotal_septimo + $subtotal_octavo + $subtotal_noveno;
+
+							$total_puntos = $puntos + $puntos_primero + $puntos_segundo + $puntos_tercero
+								+ $puntos_cuarto + $puntos_quinto + $puntos_sexto + $puntos_septimo + $puntos_octavo + $puntos_noveno;
 							
 							echo '<tr>
 								<td><strong>1ro. nivel:</strong></td>
@@ -315,12 +326,21 @@
 							//TOTAL
 							echo '<tr>
 								<td><strong>TOTAL:</strong></td>
-								<td style="text-align: right;"></td>
+								<td style="text-align: right;"><strong>'.$total_puntos.'</strong></td>
 								<td style="text-align: right;"><strong>$ '.number_format($total, 2) .'</strong></td>
 							</tr>';
 						}
 	
 						if (count($red_activos) >= 5 && count($red_activos) < 6) {
+
+							//Niveles 8 y 9
+							$total = $puntos + $bono_inicio + $subtotal_primero + $subtotal_segundo 
+								+ $subtotal_tercero + $subtotal_cuarto + $subtotal_quinto + $subtotal_sexto 
+								+ $subtotal_septimo + $subtotal_octavo + $subtotal_noveno + $subtotal_decimo + $subtotal_decimo_primero;
+
+							$total_puntos = $puntos + $puntos_primero + $puntos_segundo + $puntos_tercero
+								+ $puntos_cuarto + $puntos_quinto + $puntos_sexto + $puntos_septimo + $puntos_octavo + $puntos_noveno
+								+ $puntos_decimo + $puntos_decimo_primero;
 							
 							echo '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11';
 						}
