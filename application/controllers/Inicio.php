@@ -372,7 +372,7 @@ class Inicio extends CI_Controller {
         if (isset($is_logged) || $is_logged == true || isset($is_logged) == 1 || $is_logged != false || $is_logged != 0) {
             
 			//$data['socio'] = $this->administracion_model->_get_data_socio_by_id($this->session->userdata('id'));
-
+			
 			$data['paquetes'] = $this->compras_model->_get_paquetes();
 			//echo '<pre>'.var_export($data['paquetes'], true).'</pre>';
             $data['provincias'] = $this->administracion_model->_get_provincias();

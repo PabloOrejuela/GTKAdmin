@@ -92,6 +92,7 @@ class Comisiones_model extends CI_Model {
 		
 		$this->db->select('SUM(puntos) as puntos');
 		$this->db->where('pago', 1);
+		$this->db->where('primera', 0);
 		$this->db->where('compras.id', $id);
 		$this->db->where('MONTH(fecha)', $mes_actual);
 		$this->db->join('paquetes', 'paquetes.idpaquete=compras.idpaquete');

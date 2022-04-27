@@ -259,7 +259,7 @@ class Compras_model extends CI_Model {
 	}
 
 	/**
-	 * Extrae la suma de las compras por cobrar
+	 * Extrae la suma de las compras por cobrar, no deben ser primera compra
 	 *
 	 * @return void
 	 * @author Pablo Orejuela
@@ -270,6 +270,7 @@ class Compras_model extends CI_Model {
 		$this->db->select('SUM(paquete) as compras');
 		$this->db->where('id', $id);
 		$this->db->where('pago', 0);
+		$this->db->where('primera', 0);
 		$this->db->join('paquetes', 'paquetes.idpaquete=compras.idpaquete');
 		$this->db->order_by('idcompras', 'asc');
         $q = $this->db->get('compras');

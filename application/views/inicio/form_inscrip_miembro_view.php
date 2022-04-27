@@ -165,7 +165,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td>*Nota: Recuerde que en la primera compra se deben $10 extra por la membresía, este pago es anual</td>s
+					<td>*Nota: Recuerde que en la primera compra se deben $10 extra por la membresía, este pago es anual</td>
 				</tr>
 				<tr>
 					<td><button type="submit" class="btn btn-primary">Enviar</button></td>

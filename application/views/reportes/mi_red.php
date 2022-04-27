@@ -1,5 +1,5 @@
 <div class="row-fluid" id="container">
-    <div class="col-md-5">
+    <div class="col-md-8">
 		<table class="table table-light">
 			<tbody>
 				<tr>
