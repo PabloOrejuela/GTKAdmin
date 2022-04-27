@@ -397,6 +397,7 @@ class Procesos_model extends CI_Model {
 
 	function _get_red_activos($red){
 		$r = 0;
+		$activos = null;
 		if (isset($red) && $red !== NULL) {
 			foreach ($red as $key => $value) {
 				$r = $this->compras_model->_get_compras_mes($value->id);

@@ -511,14 +511,16 @@ class Reportes extends CI_Controller {
 			$data['total_miembros'] = $this->procesos_model->_cuenta_miembros_red($data['red']);
 			$data['red_activos'] = $this->procesos_model->_get_red_activos($data['red']);
 
+
 			$data['bono_inicio'] = $this->compras_model->_get_bono_inicio($data['id']);
 			$data['compras'] = $this->compras_model->_get_compras_cobrar($data['id']);
 			$data['nivel_1'] = $this->procesos_model->_get_hijos($data['id']);
+			$data['puntos'] = $this->comisiones_model->_get_puntos_mes($data['id']);
 
 			//echo '<pre>'.var_export($data['num_socios_activos'], true).'</pre>';
 			
 			//Actualiza las comisiones
-			$this->comisiones_model->_calcula_comisiones($data);
+			//$this->comisiones_model->_calcula_comisiones($data);
 
             $data['title']='GTK Admin';
             $data['main_content']='reportes/resumen_financiero_view';
