@@ -34,13 +34,13 @@ class Compras extends CI_Controller {
 
 
 	/**
-	 * undocumented function
+	 * Muestra una lista de las compras por confirmar
 	 *
 	 * @return void
 	 * @author
 	 **/
 	function lista_compras_confirmar($result = NULL){
-	$rol =$this->session->userdata('rol');
+		$rol =$this->session->userdata('rol');
         $data['per'] = $this->acl_model->_extraePermisos($rol);
         $is_logged = $this->session->userdata('is_logged_in');
         $data['result'] = $result;

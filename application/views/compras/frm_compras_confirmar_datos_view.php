@@ -6,7 +6,7 @@
             <div class="col-md-5">
                 <label for="fecha_evento">Provincia:</label>
             </div>
-            <div class="mb-3 col-md-3" style="margin-top: 10px;">
+            <div class="mb-3 col-md-4" style="margin-top: 10px;">
 				<select class="form-select form-select-md mb-3" id_provincia name="idprovincia" id="id_provincia">
 					<?php
 						foreach ($provincias as $key => $value) {
@@ -52,9 +52,8 @@
                     <th>CEDULA</th>
                     <th>PROVINCIA</th>
                     <th>CIUDAD</th>
+					<th>FECHA</th>
                     <th>PAQUETE</th>
-                    <th>FECHA</th>
-                    <th>MATRIZ</th>
                     <th>CONFIRMAR</th>
                     <th>CANCELAR</th>
                 </tr>
@@ -69,9 +68,8 @@
                             echo '<td>'.$value['cedula'].'</td>';
                             echo '<td>'.$value['provincia'].'</td>';
                             echo '<td>'.$value['ciudad'].'</td>';
+							echo '<td>'.$value['fecha'].'</td>';
                             echo '<td style="text-align:right;">$'.number_format(($value['paquete']), 2).'</td>';
-                            echo '<td>'.$value['fecha'].'</td>';
-                            echo '<td>UNINIVEL</td>';
                             echo '<td>'.anchor('compras/confirma_compra/'.$value['idcompras'], '<i class="fa fa-check-circle-o" aria-hidden="true"> CONFIRMAR</i>', 'attributes').'</td>';
                             echo '<td>'.anchor('compras/elimina_compra/'.$value['idcompras'], '<span style="color:red;"><i class="fa fa-ban" aria-hidden="true"> CANCELAR</i>', 'attributes').'</span></td>';
                             echo '</tr>';

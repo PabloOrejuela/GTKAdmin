@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Compras_model extends CI_Model {
 
 	private $IVA = 0.12;
+	private $MEMBRESIA = 10;
 
 	/**
 	 * Devuelve las compras sin confirmar uninivel
@@ -367,6 +368,59 @@ class Compras_model extends CI_Model {
 			return 1;
 		}
 	}
+
+	/**
+	 * Graba la compra de producto por un código
+	 *
+	 * @return void
+	 * @author Pablo Orejuela
+	 **/
+	function _set_primera_compra($data){
+		
+		$this->db->trans_start();
+		$this->db->set('id', $data['id']);
+		$this->db->set('fecha', date('Y-m-d'));
+		$this->db->set('primera', 1);
+		$this->db->set('idpaquete', $data['idpaquete']);
+		$this->db->insert('compras');
+		$data['idcompras'] = $this->db->insert_id();
+		$this->db->trans_complete();
+		if ($this->db->trans_status() == FALSE) {
+			$this->db->trans_rollback();
+			return 0;
+		} else {
+			$paquete = $this->_get_data_paquete($data['idpaquete']);
+			//echo '<pre>'.var_export($data, true).'</pre>';
+			$data['bono'] = (($paquete->paquete)/2) + ($this->MEMBRESIA/2);
+			$this->_set_bono($data);
+			$this->_set_membresia($data);
+			return 1;
+		}
+	}
+
+	/**
+	 * Graba el registro en al tabla membresías
+	 *
+	 * @return void
+	 * @author Pablo Orejuela
+	 * @date 23-04-2022
+	 **/
+	function _set_membresia($data){
+		
+		$this->db->trans_start();
+		$this->db->set('id', $data['id']);
+		$this->db->set('fecha', date('Y-m-d'));
+		$this->db->set('membresia', $this->MEMBRESIA);
+		$this->db->insert('membresia');
+		$this->db->trans_complete();
+		if ($this->db->trans_status() == FALSE) {
+			$this->db->trans_rollback();
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+
 
 	/**
 	 * Graba el bono inicio de la primera compra de un socio nuevo

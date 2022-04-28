@@ -83,7 +83,7 @@ h4 a {
 
 #table_resumen {
 	border: 1px solid #999696;
-	font-size: 12px;
+	font-size: 11px;
 	margin-bottom: 20px;
 	padding: 1px;
 	width: auto;
@@ -340,11 +340,11 @@ select {
 
 #table_datos {
 
-	font-size: 0.9em;
+	font-size: 0.8em;
 	padding: 5px;
 	vertical-align: middle;
 	margin: 20px;
-	width: 60%;
+	width: 90%;
 }
 
 #td_left {

@@ -28,6 +28,7 @@
                         echo '<li><a class="dropdown-item" href="'.base_url().'reportes/resumen_financiero">Resumen financiero</a></li>
 															<li><a class="dropdown-item" href="'.base_url().'reportes/mi_red">Mi red</a></li>
                         			<li><a class="dropdown-item" href="'.base_url().'compras/comprar_producto">Comprar producto</a></li>
+															<li><a class="dropdown-item" href="'.base_url().'compras/pagar_membresia">Pagar membresía</a></li>
 															<li><hr class="dropdown-divider"></li>
                         			<li><a class="dropdown-item" href="'.base_url().'inicio/formulario_inscripcion_miembro">Inscripción S/N</a></li>';
                 echo '</ul></li>';

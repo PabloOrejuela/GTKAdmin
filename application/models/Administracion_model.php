@@ -325,7 +325,7 @@ class Administracion_model extends CI_Model {
     }
 
 	/**
-	 * Registra un socio
+	 * Registra un socio nuevo
 	 *
 	 *
 	 * @param Type array
@@ -351,7 +351,7 @@ class Administracion_model extends CI_Model {
 		$data['id'] = $r;
 
 		//Registro primera compra
-		$this->compras_model->_set_compra($data);
+		$this->compras_model->_set_primera_compra($data);
 
 		$this->db->trans_complete();
 		if ($this->db->trans_status() == FALSE) {
