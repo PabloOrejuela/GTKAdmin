@@ -62,6 +62,29 @@ class Socios_model extends CI_Model {
 		return $codigos;
     }
 
+	/**
+     * Función que devuelve el codigo del socio
+     * @arg Array Codigo
+     * @return int
+     * @author Pablo Orejuela
+     * @fecha 20-01-2021
+     **/
+    function _get_membresias_confirmar(){
+		$membresias = NULL;
+        $this->db->select('*');
+        $this->db->where('pagado', 0);
+		$this->db->join('codigo_socio', 'codigo_socio.id = membresia.id');
+		$this->db->join('socios', 'socios.idsocio = codigo_socio.idsocio');
+        $q = $this->db->get('membresia');
+        //echo $this->db->last_query();
+        if ($q->num_rows() > 0) {
+            foreach ($q->result() as $c){
+                $membresias[] = $c;
+            }
+        }
+		return $membresias;
+    }
+
 
     /**
      * Elimina las cuentas de banco registradas
@@ -116,6 +139,26 @@ class Socios_model extends CI_Model {
 		$this->db->set('estado', 1);
 		$this->db->where('id', $id);
 		$this->db->update('codigo_socio');
+		$this->db->trans_complete();
+        if ($this->db->trans_status() == FALSE) {
+        	$this->db->trans_rollback();
+            return 0;
+        } else {
+            return 1;
+        }
+	}
+
+	/**
+	 * Confirma el pago de la membresia y activa el código
+	 *
+	 * @return void
+	 * @author
+	 **/
+	function _confirma_pago_membresia($idmembresia){
+		$this->db->trans_start();
+		$this->db->set('pagado', 1);
+		$this->db->where('idmembresia', $idmembresia);
+		$this->db->update('membresia');
 		$this->db->trans_complete();
         if ($this->db->trans_status() == FALSE) {
         	$this->db->trans_rollback();

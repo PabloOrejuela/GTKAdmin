@@ -51,14 +51,14 @@ class Socios extends CI_Controller {
 		$is_logged = $this->session->userdata('is_logged_in');
 		$data['result'] = $result;
 		if (isset($is_logged) == true || isset($is_logged) == 1) {
-
+//PABLO añadir la funcionalidad para que cada año pida renovar la membresía
 			// //Capturo los datos
 			// $data['idprovincia'] = $this->input->post('id_provincia');
 			// $data['idciudad'] = $this->input->post('ciudad');
 			// $data['cedula'] = $this->input->post('cedula');
 
 			// //Traigo las filas
-			$data['socios'] = $this->socios_model->_get_codigo_estado(0);
+			$data['filas'] = $this->socios_model->_get_membresias_confirmar();
 			// $data['provincias'] = $this->administracion_model->_get_provincias();
 
 			$data['version'] = $this->config->item('system_version');
@@ -133,6 +133,21 @@ class Socios extends CI_Controller {
 
         $this->form_elimina_socio();
     }
+
+	/**
+	 * Confirma el pago de la membresía
+	 *
+	 * @return void
+	 * @author Pablo Orejuela
+	 **/
+	function confirma_pago_membresia($idmembresia){echo $idmembresia;
+        /*
+            Aqui se confirma la compra luego de recibir el pago
+        */
+		$r = $this->socios_model->_confirma_pago_membresia($idmembresia);
+
+		$this->activa_codigo($r);
+	}
 }
 
 /* End of file Controllername.php */
