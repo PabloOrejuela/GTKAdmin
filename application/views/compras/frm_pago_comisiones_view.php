@@ -4,7 +4,7 @@
         <div class="col-md-12" id="grid_form">
             <h3>Confirmar pago de comisiones pendientes</h3>
 			<h5>Corte al: <?php echo date('Y-m-d  H:i:s') ?></h5>
-            <div class="col-md-5">
+            <!-- <div class="col-md-5">
                 <label for="fecha_evento">Provincia:</label>
             </div>
             <div class="mb-3 col-md-3" style="margin-top: 10px;">
@@ -38,7 +38,7 @@
             <div class="col-md-3">
                 <input type="text" name="cedula" value="<?php echo set_value('cedula'); ?>" class="form-control" >
             </div>
-        </div>
+        </div> -->
         <div class="col-md-5" id="grid_form">
             <div class="col-md-3">
                 <button type="submit" class="btn btn-primary">Enviar</button>

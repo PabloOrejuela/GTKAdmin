@@ -120,7 +120,7 @@
 				<tr>
 					<td>
 					<div class="mb-3">
-						<label for="banco">Banco:</label>
+						<label for="banco" class="form-label">Banco:</label>
 							<?php
 								$arr_banco = array('' => 'Elija...' );
 								foreach ($bancos as $key => $value) {
@@ -133,7 +133,7 @@
 					</td>
 					<td>
 					<div class="mb-3">
-						<label for="tipo_cuenta">Tipo de cta:</label>
+						<label for="tipo_cuenta" class="form-label">Tipo de cta:</label>
 						<select name="tipo_cuenta" class="form-select form-control" id="tipo_cuenta">
 							<option value="1" selected="">AHORROS</option>
 							<option value="2">CORRIENTE</option>
@@ -144,13 +144,13 @@
 				<tr>
 					<td>
 					<div class="mb-3" colspan="2">
-						<label for="num_cta">Cuenta bancaria:</label>
+						<label for="num_cta" class="form-label">Cuenta bancaria:</label>
 						<input type="text" class="form-control info_patrocinador" name="num_cta" placeholder="cuenta" id="cuenta_socio" value="<?php set_value('num_cta');?>">
 					</div>
 					</td>
 					<td>
 						<div class="mb-3" colspan="2">
-							<label for="paquete">Paquete *:</label>
+							<label for="paquete" class="form-label">Paquete *:</label>
 							<select name="idpaquete" class="form-select form-control" id="paquete">
 								<option value="0" selected>Elija un paquete para su primera compra</option>
 								<?php 

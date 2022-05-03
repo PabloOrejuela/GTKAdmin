@@ -14,6 +14,9 @@
 						foreach ($nivel_1 as $value) {
 							echo '<tr><td>'.$value->id.'</td><td>'.$value->codigo_socio.'</td><td>'.$value->nombres.' '.$value->apellidos.'</td></tr>';
 						} 
+					}else {
+						echo '<tr><td id="td_resumen" colspan="2"><strong>Primer Nivel</strong></td>
+						<td id="td_resumen" colspan="2"><strong>No tiene socios en su red</strong></td></tr>';
 					}
 
 					if (isset($nivel_2[0]) && $nivel_2[0] != NULL) {

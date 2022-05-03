@@ -41,6 +41,11 @@ h1 {
 	padding: 2px 2px 2px 2px;
 }
 
+.form-label{
+	margin-bottom: 0px;
+	font-weight: bold;
+}
+
 h4 a {
 	color: #E13300;
 }

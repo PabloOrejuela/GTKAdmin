@@ -21,7 +21,15 @@
 					<td id="td_resumen"><?php echo $socio->codigo_socio; ?></td>
 				<tr>
 					<td id="td_resumen"><strong>Patrocinados directos:</strong></td>
-					<td><?php echo count($nivel_1);  ?></td>
+					<td>
+						<?php 
+							if ($nivel_1) {
+								echo count($nivel_1);
+							}else{
+								echo 0;
+							}
+						?>
+					</td>
 					<td id="td_resumen"><strong>Total Miembros:</strong></td>
 					<td id="td_resumen"><?php echo $total_miembros.' miembros'; ?></td>
 				</tr>
@@ -46,7 +54,9 @@
 				<tr>
 					<td><strong>Bonos Inicio Rápido:</strong></td>
 					<td style="text-align: right;"></td>
-					<td style="text-align: right;"><?php echo'$ '. $bono_inicio; ?></td>
+					<td style="text-align: right;">
+						<?php echo $bono_inicio != null ? '$ '. $bono_inicio : '$ 0.00';  ?>
+					</td>
 				</tr>
 				<tr>
 					<td><strong>Punto por Compras del periodo:</strong></td>

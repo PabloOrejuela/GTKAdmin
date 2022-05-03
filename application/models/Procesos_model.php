@@ -312,8 +312,12 @@ class Procesos_model extends CI_Model {
 	 * @throws conditon
 	 **/
 	function _cuenta_miembros_red($red) {
+		if ($red != NULL) {
+			return count($red);
+		}else{
+			return 0;
+		}
 		
-		return count($red);
 	}
 
 	/**
@@ -326,6 +330,7 @@ class Procesos_model extends CI_Model {
 	 **/
 	function _get_red($id) {
 		$total = 0;
+		$red = null;
 		//$red = NULL;
 		//PABLO hacer esto en un blucle
 		

@@ -89,7 +89,7 @@
 				<tr>
 					<td>
 						<div class="mb-3">
-							<label for="banco">Banco:</label>
+							<label for="banco" class="form-label">Banco:</label>
 							<select class="form-select" aria-label="Default select example" name="banco" id="id_banco">
 								<?php 
 								
@@ -106,7 +106,7 @@
 					</td>
 					<td>
 					<div class="mb-3">
-						<label for="tipo_cuenta">Tipo de cta:</label>
+						<label for="tipo_cuenta" class="form-label">Tipo de cta:</label>
 						<select name="tipo_cuenta" class="form-select form-control" id="tipo_cuenta">
 							<?php 
 								if ($socio[0]->idtipo_cuenta == 1) {
@@ -122,7 +122,7 @@
 				<tr>
 					<td>
 						<div class="mb-3" colspan="2">
-							<label for="num_cta">Cuenta bancaria:</label>
+							<label for="num_cta" class="form-label">Cuenta bancaria:</label>
 							<input type="text" class="form-control info_patrocinador" name="num_cta" placeholder="cuenta" id="cuenta_socio" value="<?php echo $socio[0]->num_cta;?>">
 						</div>
 						</td>
