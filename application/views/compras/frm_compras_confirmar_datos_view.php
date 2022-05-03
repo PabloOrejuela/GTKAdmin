@@ -3,7 +3,7 @@
         <form action="lista_compras_confirmar" method="post" accept-charset="utf-8">
         <div class="col-md-12" id="grid_form">
             <h3>Compras por confirmar</h3>
-            <div class="col-md-5">
+            <!-- <div class="col-md-5">
                 <label for="fecha_evento">Provincia:</label>
             </div>
             <div class="mb-3 col-md-4" style="margin-top: 10px;">
@@ -37,7 +37,7 @@
             <div class="col-md-3">
                 <input type="text" name="cedula" value="<?php echo set_value('cedula'); ?>" class="form-control" >
             </div>
-        </div>
+        </div> -->
         <div class="col-md-5" id="grid_form">
             <div class="col-md-3">
                 <button type="submit" class="btn btn-primary">Enviar</button>

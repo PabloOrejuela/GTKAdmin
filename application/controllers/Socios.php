@@ -8,7 +8,27 @@ class Socios extends CI_Controller {
         parent::__construct();
         $this->load->model('acl_model');
         $this->load->model('socios_model');
+		$this->load->model('administracion_model');
         
+    }
+
+	public function index(){
+        $rol =$this->session->userdata('rol');
+        $data['per'] = $this->acl_model->_extraePermisos($rol);
+        $is_logged = $this->session->userdata('is_logged_in');
+        $data['result'] = 0;
+        if (isset($is_logged) == true || isset($is_logged) == 1) {
+        	$data['provincias'] = $this->administracion_model->_get_provincias();
+            //PABLO no está filtrando por provincia
+            $data['version'] = $this->config->item('system_version');
+            $data['title']='GTK Admin';
+            $data['main_content']='socios/frm_socios_confirmar_view';
+            $this->load->view('includes/template', $data);
+        }
+        else{
+            
+            redirect('Inicio','refresh');
+        }
     }
         
 
@@ -53,17 +73,15 @@ class Socios extends CI_Controller {
 		if (isset($is_logged) == true || isset($is_logged) == 1) {
 //PABLO añadir la funcionalidad para que cada año pida renovar la membresía
 			// //Capturo los datos
-			// $data['idprovincia'] = $this->input->post('id_provincia');
-			// $data['idciudad'] = $this->input->post('ciudad');
-			// $data['cedula'] = $this->input->post('cedula');
+			$data['idprovincia'] = $this->input->post('idprovincia');
 
 			// //Traigo las filas
-			$data['filas'] = $this->socios_model->_get_membresias_confirmar();
-			// $data['provincias'] = $this->administracion_model->_get_provincias();
+			$data['filas'] = $this->socios_model->_get_membresias_confirmar($data);
+			$data['provincias'] = $this->administracion_model->_get_provincias();
 
 			$data['version'] = $this->config->item('system_version');
 			$data['title']='GTK Admin';
-			$data['main_content']='socios/frm_socios_confirmar_view';
+			$data['main_content']='socios/frm_socios_confirmar_datos_view';
 			$this->load->view('includes/template', $data);
 		}
 		else{
@@ -140,7 +158,7 @@ class Socios extends CI_Controller {
 	 * @return void
 	 * @author Pablo Orejuela
 	 **/
-	function confirma_pago_membresia($idmembresia){echo $idmembresia;
+	function confirma_pago_membresia($idmembresia){
         /*
             Aqui se confirma la compra luego de recibir el pago
         */

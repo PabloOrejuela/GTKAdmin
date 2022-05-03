@@ -40,6 +40,7 @@ class Compras extends CI_Controller {
 	 * @author
 	 **/
 	function lista_compras_confirmar($result = NULL){
+		//PABLO No está filtrando por ciudad el formulario
 		$rol =$this->session->userdata('rol');
         $data['per'] = $this->acl_model->_extraePermisos($rol);
         $is_logged = $this->session->userdata('is_logged_in');

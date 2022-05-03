@@ -69,12 +69,17 @@ class Socios_model extends CI_Model {
      * @author Pablo Orejuela
      * @fecha 20-01-2021
      **/
-    function _get_membresias_confirmar(){
+    function _get_membresias_confirmar($data){echo $data['idprovincia'];
 		$membresias = NULL;
         $this->db->select('*');
         $this->db->where('pagado', 0);
-		$this->db->join('codigo_socio', 'codigo_socio.id = membresia.id');
+		if ($data['idprovincia'] != NULL) {
+			$this->db->where('idprovincia', $data['idprovincia']);
+		}
+		$this->db->join('codigo_socio', 'membresia.id=codigo_socio.id');
 		$this->db->join('socios', 'socios.idsocio = codigo_socio.idsocio');
+		$this->db->join('ciudad', 'socios.idciudad=ciudad.idciudad');
+		$this->db->join('provincias', 'ciudad.id_provincia=provincias.idprovincia');
         $q = $this->db->get('membresia');
         //echo $this->db->last_query();
         if ($q->num_rows() > 0) {

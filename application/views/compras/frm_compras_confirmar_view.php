@@ -3,7 +3,7 @@
         <form action="compras/lista_compras_confirmar" method="post" accept-charset="utf-8" id="form_cabecera">
 			<div class="col-md-12" id="grid_form">
 				<h3>Compras por confirmar</h3>
-				<div class="col-md-3">
+				<!-- <div class="col-md-3">
 					<label for="idprovincia">Provincia:</label>
 				</div>
 				<div class="col-md-4" style="margin-top: 10px;;">
@@ -20,10 +20,10 @@
 									</script>';
 						?>
 					</select>
-				</div>
+				</div> -->
 			</div>
 				
-			<div class="col-md-5" id="grid_form">
+			<!-- <div class="col-md-5" id="grid_form">
 				<div class="col-md-5">
 					<label for="lugar_evento">Ciudad:</label>
 				</div>
@@ -38,7 +38,7 @@
 				<div class="mb-4">
 					<input type="text" name="cedula" class="form-control"  />
 				</div>
-			</div>
+			</div> -->
 			<div class="col-md-12" id="grid_form">
 				<div class="col-md-3">
 					<button type="submit" class="btn btn-primary">Enviar</button>

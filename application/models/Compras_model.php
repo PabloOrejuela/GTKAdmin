@@ -48,7 +48,7 @@ class Compras_model extends CI_Model {
 	 **/
 	function _get_comisiones_confirmar($data){
 
-		//COMPRAS
+		//Comisiones
 		$this->db->select('*');
 		$this->db->where('pagado', 0);
 		if ($data['idciudad'] != NULL) {
