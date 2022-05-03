@@ -356,6 +356,38 @@ class Inicio extends CI_Controller {
     }
 
 	/**
+	 * Formulario para editar la información del socio
+	 *
+	 * @param Type $var Description
+	 * @return type
+	 * @fecha 2-05-2022
+	 **/
+	public function edit_profile($mensaje = ''){
+		$data['mensaje'] = $mensaje;
+        $rol = $this->session->userdata('rol');
+        $data['per'] = $this->acl_model->_extraePermisos($rol);
+        $is_logged = $this->session->userdata('is_logged_in');
+        $data['result'] = 0;
+        if (isset($is_logged) || $is_logged == true || isset($is_logged) == 1 || $is_logged != false || $is_logged != 0) {
+            
+			$data['socio'] = $this->administracion_model->_get_data_socio_by_id($this->session->userdata('id'));
+			$data['provincias'] = $this->administracion_model->_get_provincias();
+			$data['bancos'] = $this->administracion_model->_get_bancos();
+
+			//echo '<pre>'.var_export($data['socio'], true).'</pre>';
+			//PABLO Poner funcionalidad para editar Provincia y Ciudad
+
+            $data['title'] ='GTK Admin';
+            $data['main_content'] ='inicio/frm_edit_profile';
+            $this->load->view('includes/template', $data);
+        }
+        else{
+            $this->session->sess_destroy();
+            echo $this->index();
+        }
+	}
+
+	/**
      * Muestra el form de inscripción
      *
      * @param Type string
@@ -499,15 +531,56 @@ class Inicio extends CI_Controller {
         }
 	}
 
-		public function paquete_check($str){
-			if ($str == '0'){
-				$this->form_validation->set_message('paquete_check', '<span id="error-message">ERROR: Debe elegir un paquete como su primera compra</span>');
-				return FALSE;
-			}
-			else{
-				return TRUE;
-			}
+	/**
+      * Registro de usuarios normal
+      *
+      * @return void
+      * @author Pablo Orejuela
+      * @revisión: 15-12-2021
+      **/
+	  function actualiza_datos_frm_registro(){
+
+        $this->form_validation->set_rules('cedula', 'Cédula', 'required');
+        $this->form_validation->set_message('required', '<span id="error-message">ERROR: Este campo es obligatorio</span>');
+        if ($this->form_validation->run() == FALSE){
+			$this->formulario_inscripcion_miembro('Hubo un problema');
+        }else{
+
+			//Establesco el rango dependiendo de la matriz
+			$data['idsocio'] = $this->session->userdata('id');	
+			$data['cedula'] = $this->input->post('cedula');
+            $data['nombres'] = strtoupper($this->input->post('nombres'));
+            $data['apellidos'] = strtoupper($this->input->post('apellidos'));
+            $data['direccion'] = strtoupper($this->input->post('direccion'));
+			// $data['idprovincia'] = $this->input->post('id_provincia');
+            // $data['idciudad'] = $this->input->post('ciudad');
+            $data['celular'] = $this->input->post('celular');
+            $data['email'] = $this->input->post('email');
+			//echo '<pre>'.var_export($socio, true).'</pre>';
+
+            //info banco
+			$data['num_cta'] = $this->input->post('num_cta');
+			$data['num_cta'] = $this->input->post('num_cta');
+			$data['idtipo_cuenta'] = $this->input->post('tipo_cuenta');
+			$data['idbanco'] = $this->input->post('banco');
+
+			$this->administracion_model->_update_cta_socio($data);
+
+			$this->administracion_model->_update_socio($data);
+			//echo '<pre>'.var_export($data['result'], true).'</pre>';
+			$this->edit_profile($result = "La información se ha actualizado correctamente");
         }
+	}
+
+	public function paquete_check($str){
+		if ($str == '0'){
+			$this->form_validation->set_message('paquete_check', '<span id="error-message">ERROR: Debe elegir un paquete como su primera compra</span>');
+			return FALSE;
+		}
+		else{
+			return TRUE;
+		}
+	}
     
 }
 

@@ -146,12 +146,13 @@ class Administracion_model extends CI_Model {
 		$this->db->select(
             'socios.idsocio,nombres,cedula,socios.idciudad,
             idprovincia,direccion,apellidos,celular,email,idrol,
-            clave_socio,logged_socio,rango,codigo_socio'
+            clave_socio,logged_socio,rango,codigo_socio,num_cta,idbanco,idtipo_cuenta,ciudad'
         );
 		$this->db->where('socios.idsocio', $id);
 		$this->db->join('ciudad', 'ciudad.idciudad = socios.idciudad');
 		$this->db->join('provincias', 'provincias.idprovincia = ciudad.id_provincia');
 		$this->db->join('codigo_socio', 'codigo_socio.idsocio = socios.idsocio');
+		$this->db->join('cta_banco', 'socios.idsocio = cta_banco.idsocio');
 		$this->db->join('rangos', 'rangos.idrango = codigo_socio.idrango');
 		$q = $this->db->get('socios');
 		//echo $this->db->last_query().'<br>';
@@ -392,6 +393,24 @@ class Administracion_model extends CI_Model {
         }
     }
 
+	/*
+    * Esta función hora registra a todo tipo de socios
+    * 
+    * Param: array
+    * Return: array
+    */
+    function _update_socio($socio){
+
+        $this->db->set('nombres',strtoupper($socio['nombres']));
+        $this->db->set('apellidos',strtoupper($socio['apellidos']));
+        $this->db->set('cedula',$socio['cedula']);
+		$this->db->set('email',$socio['email']);
+        $this->db->set('direccion',strtoupper($socio['direccion']));
+        $this->db->set('celular',$socio['celular']);
+		$this->db->where('idsocio', $socio['idsocio']);
+        $this->db->update('socios');
+    }
+
 	function _set_cta_socio($socio){
 		$this->db->trans_start();
 		$this->db->set('idsocio',$socio['idsocio']);
@@ -405,6 +424,14 @@ class Administracion_model extends CI_Model {
         }else {
             return 1;
         }
+	}
+
+	function _update_cta_socio($socio){ 
+		$this->db->where('idsocio',$socio['idsocio']);
+		$this->db->set('num_cta',$socio['num_cta']);
+		$this->db->set('idbanco',$socio['idbanco']);
+		$this->db->set('idtipo_cuenta',$socio['idtipo_cuenta']);
+		$this->db->update('cta_banco');
 	}
 
 	/**
