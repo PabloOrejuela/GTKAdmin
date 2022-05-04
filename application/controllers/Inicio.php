@@ -127,7 +127,7 @@ class Inicio extends CI_Controller {
 
     function email_pin($data, $datos_usuario){
 		
-		$this->email->from('desarrollo@appdvp.com', 'Admin');
+		$this->email->from('admin@gtk-ecuador.com', 'Admin');
 		$this->email->to($datos_usuario->email);
 		
 		$this->email->subject('Código de verificación');
