@@ -351,8 +351,8 @@ class Administracion_model extends CI_Model {
 		
 		$data['id'] = $r;
 
-		//Registro primera compra
-		$this->compras_model->_set_primera_compra($data);
+		//Registro la membresía
+		$this->compras_model->_set_membresia($data);
 
 		$this->db->trans_complete();
 		if ($this->db->trans_status() == FALSE) {

@@ -72,8 +72,15 @@
                         <button type="submit" class="btn btn-primary">Comprar</button>
                         <?php 
 							}
+							
 							echo form_hidden('idsocio', $socio->idsocio);
 							echo form_hidden('id', $socio->id);
+							echo form_hidden('idpatrocinador', $socio->patrocinador);
+							if (!isset($primera_compra) || $primera_compra == NULL) {
+								echo form_hidden('primera_compra', 1);
+							}else {
+								echo form_hidden('primera_compra', 0);
+							}
 							echo form_close(); 
 						?>
                     </td>

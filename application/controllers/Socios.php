@@ -73,11 +73,11 @@ class Socios extends CI_Controller {
 		if (isset($is_logged) == true || isset($is_logged) == 1) {
 //PABLO añadir la funcionalidad para que cada año pida renovar la membresía
 			// //Capturo los datos
-			$data['idprovincia'] = $this->input->post('idprovincia');
+			//$data['idprovincia'] = $this->input->post('idprovincia');
 
 			// //Traigo las filas
 			$data['filas'] = $this->socios_model->_get_membresias_confirmar($data);
-			$data['provincias'] = $this->administracion_model->_get_provincias();
+			///$data['provincias'] = $this->administracion_model->_get_provincias();
 
 			$data['version'] = $this->config->item('system_version');
 			$data['title']='GTK Admin';
@@ -87,20 +87,6 @@ class Socios extends CI_Controller {
 		else{
 			echo $this->index();
 		}
-	}
-
-	/**
-	 * Aqui se confirma elpago de la membresía y activamos el codigo
-	 *
-	 * @return void
-	 * @author
-	 **/
-	function activa_codigo(){
-        
-		$id = $this->input->post('id');
-		$result = $this->socios_model->_confirmar_membresia($id);
-
-		$this->lista_confirma_socios($result);
 	}
     
     /**
@@ -160,11 +146,29 @@ class Socios extends CI_Controller {
 	 **/
 	function confirma_pago_membresia($idmembresia){
         /*
-            Aqui se confirma la compra luego de recibir el pago
+            Aqui se confirma la membresia luego de recibir el pago
         */
-		$r = $this->socios_model->_confirma_pago_membresia($idmembresia);
+		
+		//traigo los datos de la membersia
+		$data['membresia'] = $this->socios_model->_get_datos_membresia($idmembresia);
 
-		$this->activa_codigo($r);
+		//Saco el id y verifico si tiene otras membresías
+		$membresias = $this->socios_model->_get_membresias_id($data['membresia'][0]->id);
+
+		if ($membresias == 1) {
+			//SI es primera
+			//creo el bono para el patrocinador
+			$this->socios_model->_set_bono_membresia($data['membresia'][0]);
+		}
+		$r = $this->socios_model->_confirma_pago_membresia($idmembresia);
+		$result = $this->socios_model->_confirmar_membresia($data['membresia'][0]->id);
+		
+
+		//echo '<pre>'.var_export($data['membresia'], true).'</pre>';
+
+		$this->lista_confirma_socios($result);
+
+		
 	}
 }
 

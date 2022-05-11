@@ -359,6 +359,9 @@ class Procesos_model extends CI_Model {
 		$nivel_9 = $this->_get_siguiente_nivel($nivel_8);
 		$noveno = $this->_arma__nivel($nivel_9);
 
+		$nivel_10 = $this->_get_siguiente_nivel($nivel_9);
+		$decimo = $this->_arma__nivel($nivel_10);
+
 		if ($nivel_1) {
 			$red = array_merge($nivel_1);
 		}
@@ -393,6 +396,10 @@ class Procesos_model extends CI_Model {
 
 		if ($noveno) {
 			$red = array_merge($red, $noveno);
+		}
+
+		if ($decimo) {
+			$red = array_merge($red, $decimo);
 		}
 		
 		//echo '<pre>'.var_export($red, true).'</pre>';

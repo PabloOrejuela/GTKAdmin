@@ -201,6 +201,9 @@ class Compras extends CI_Controller {
 
 			$data['paquetes'] = $this->compras_model->_get_paquetes();
 			$data['socio'] = $this->socios_model->_get_socio_by_id($this->session->userdata('id'));
+			$data['primera_compra'] = $this->compras_model->_get_compras_codigo($this->session->userdata('id'));
+			//echo '<pre>'.var_export($data['socio'], true).'</pre>';
+			
 			$data['mensaje'] = $mensaje;
             $data['title']='GTK Admin';
             $data['main_content']='compras/frm_compra';
@@ -220,18 +223,37 @@ class Compras extends CI_Controller {
             $data['idsocio'] = $this->input->post('idsocio');
             $data['idpaquete'] = $this->input->post('idpaquete');
 			$data['id'] = $this->input->post('id');
+			$data['idpatrocinador'] = $this->input->post('idpatrocinador');
+			$data['primera_compra'] = $this->input->post('primera_compra');
+			//echo '<pre>'.var_export($data['idpatrocinador'], true).'</pre>';
 
             if ($data['idpaquete'] != 0) {
-                $r = $this->compras_model->_set_compra($data);
-                if ($r != 0) {
-                    $data['version'] = $this->config->item('system_version');
-                    $data['title']='GTK Admin';
-                    $data['main_content']='exito/exito';
-                    $this->load->view('includes/template', $data);
-                }else{
-					$mensaje = "No se pudo realizar la compra, por favor contacte al administrador del sistema";
-                	$this->comprar_producto($mensaje);
+				if ($data['primera_compra'] == 1) {
+					
+					$r = $this->compras_model->_set_primera_compra($data);
+					if ($r != 0) {
+						$data['version'] = $this->config->item('system_version');
+						$data['title']='GTK Admin';
+						$data['main_content']='exito/exito';
+						$this->load->view('includes/template', $data);
+					}else{
+						$mensaje = "No se pudo realizar la compra, por favor contacte al administrador del sistema";
+						$this->comprar_producto($mensaje);
+					}
+				}else {
+					$r = $this->compras_model->_set_compra($data);
+					if ($r != 0) {
+						$data['version'] = $this->config->item('system_version');
+						$data['title']='GTK Admin';
+						$data['main_content']='exito/exito';
+						$this->load->view('includes/template', $data);
+					}else{
+						$mensaje = "No se pudo realizar la compra, por favor contacte al administrador del sistema";
+						$this->comprar_producto($mensaje);
+					}
 				}
+                
+                
             }else{
 				$mensaje = "";
                 $this->comprar_producto($mensaje);
@@ -239,37 +261,6 @@ class Compras extends CI_Controller {
         }
         else{
             $this->index();
-        }
-    }
-
-
-    function registra_recompra_admin(){
-        $rol =$this->session->userdata('rol');
-        $data['per'] = $this->acl_model->_extraePermisos($rol);
-        $is_logged = $this->session->userdata('is_logged_in');
-        if (isset($is_logged) == true || isset($is_logged) == 1) {
-
-            $data['idcodigo_socio_binario'] = $this->input->post('idcodigo_socio_binario');
-            $data['idpaquete'] = $this->input->post('idpaquete');
-            $data['fecha'] = $this->input->post('fecha');
-
-            $r = $this->compras_model->_graba_compra_binaria_admin($data);
-            if ($r != 0) {
-                $data['exito'] = 1;
-                $data['version'] = $this->config->item('system_version');
-                $data['title']='GTK Admin';
-                $data['main_content']='compras/frm_recompra_binaria_admin';
-                $this->load->view('includes/template', $data);
-            }else{
-                $data['exito'] = 0;
-                $data['version'] = $this->config->item('system_version');
-                $data['title']='GTK Admin';
-                $data['main_content']='compras/frm_recompra_binaria_admin';
-                $this->load->view('includes/template', $data);
-            }
-        }
-        else{
-            $this->frm_recompra_binaria_admin();
         }
     }
 }

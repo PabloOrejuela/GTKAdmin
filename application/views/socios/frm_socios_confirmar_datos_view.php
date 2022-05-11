@@ -9,15 +9,15 @@
             <div class="mb-3 col-md-4" style="margin-top: 10px;">
 				<select class="form-select form-select-md mb-3" id_provincia name="idprovincia" id="id_provincia">
 					<?php
-						foreach ($provincias as $key => $value) {
-							echo '<option value="'.$value->idprovincia.'">'.$value->provincia.'</option>';
-						}
+						// foreach ($provincias as $key => $value) {
+						// 	echo '<option value="'.$value->idprovincia.'">'.$value->provincia.'</option>';
+						// }
 
-						$js = 'id="id_provincia"';
-						$url = base_url();
-						echo '<script languaje="JavaScript">
-								var varjs="'.$url.'";
-								</script>';
+						// $js = 'id="id_provincia"';
+						// $url = base_url();
+						// echo '<script languaje="JavaScript">
+						// 		var varjs="'.$url.'";
+						// 		</script>';
 					?>
 				</select>
 			</div>
@@ -52,7 +52,9 @@
                             echo '<td>'.anchor('socios/elimina_membresia/'.$value->idmembresia, '<span style="color:red;"><i class="fa fa-ban" aria-hidden="true"> CANCELAR</i>', 'attributes').'</span></td>';
                             echo '</tr>';
                         }
-                    }
+                    }else{
+						echo '<tr><td colspan="6">No hay membresías sin confirmar</td></tr>';
+					}
 
 					if (!isset($result) || $result == NULL) {
 						//No muestro nada

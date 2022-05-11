@@ -284,6 +284,28 @@ class Compras_model extends CI_Model {
 	}
 
 	/**
+	 * Extrae todas las compras de un socio
+	 *
+	 * @return void
+	 * @author Pablo Orejuela
+	 * @date 10-05-2022
+	 **/
+	function _get_compras_codigo($id){
+		$compras = null;
+		$this->db->select('*');
+		$this->db->where('id', $id);
+		$this->db->join('paquetes', 'paquetes.idpaquete=compras.idpaquete');
+		$this->db->order_by('idcompras', 'asc');
+        $q = $this->db->get('compras');
+        if($q->result() > 0){
+            foreach ($q->result() as $row) {
+                $compras[] = $row;
+            }
+        }
+        return $compras;
+	}
+
+	/**
      * Devuelve los paquetes disponibles para la compra
      *
      * @param Type void
@@ -393,7 +415,6 @@ class Compras_model extends CI_Model {
 			//echo '<pre>'.var_export($data, true).'</pre>';
 			$data['bono'] = (($paquete->paquete)/2) + ($this->MEMBRESIA/2);
 			$this->_set_bono($data);
-			$this->_set_membresia($data);
 			return 1;
 		}
 	}

@@ -40,6 +40,7 @@ class Socios_model extends CI_Model {
         }
     }
 
+
 	/**
      * Función que devuelve el codigo del socio
      * @arg Array Codigo
@@ -69,13 +70,13 @@ class Socios_model extends CI_Model {
      * @author Pablo Orejuela
      * @fecha 20-01-2021
      **/
-    function _get_membresias_confirmar($data){echo $data['idprovincia'];
+    function _get_membresias_confirmar($data){
 		$membresias = NULL;
         $this->db->select('*');
         $this->db->where('pagado', 0);
-		if ($data['idprovincia'] != NULL) {
-			$this->db->where('idprovincia', $data['idprovincia']);
-		}
+		// if ($data['idprovincia'] != NULL) {
+		// 	$this->db->where('idprovincia', $data['idprovincia']);
+		// }
 		$this->db->join('codigo_socio', 'membresia.id=codigo_socio.id');
 		$this->db->join('socios', 'socios.idsocio = codigo_socio.idsocio');
 		$this->db->join('ciudad', 'socios.idciudad=ciudad.idciudad');
@@ -89,6 +90,49 @@ class Socios_model extends CI_Model {
         }
 		return $membresias;
     }
+
+	/**
+	 * undocumented function summary
+	 *
+	 * Undocumented function long description
+	 *
+	 * @param Type $var Description
+	 * @return type
+	 * @throws conditon
+	 **/
+	function _get_membresias_id($id){
+		$num = null;
+		$this->db->select('*')->where('id', $id);
+		$q = $this->db->get('membresia');
+		if ($q->num_rows() > 0) {
+			foreach ($q->result() as $row) {
+				$num += 1;
+			}
+		}
+		return $num;
+	}
+
+	/**
+	 * undocumented function summary
+	 *
+	 * Undocumented function long description
+	 *
+	 * @param Type $var Description
+	 * @return type
+	 * @throws conditon
+	 **/
+	function _get_datos_membresia($idmembresia){
+		$datos = null;
+		$this->db->select('*')->where('idmembresia', $idmembresia);
+		$this->db->join('codigo_socio', 'codigo_socio.id = membresia.id');
+		$q = $this->db->get('membresia');
+		if ($q->num_rows() > 0) {
+			foreach ($q->result() as $row) {
+				$datos[] = $row;
+			}
+		}
+		return $datos;
+	}
 
 
     /**
@@ -144,6 +188,29 @@ class Socios_model extends CI_Model {
 		$this->db->set('estado', 1);
 		$this->db->where('id', $id);
 		$this->db->update('codigo_socio');
+		$this->db->trans_complete();
+        if ($this->db->trans_status() == FALSE) {
+        	$this->db->trans_rollback();
+            return 0;
+        } else {
+            return 1;
+        }
+	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author
+	 **/
+	function _set_bono_membresia($objet){
+		//PABLO verificar si ya hay un bono para esta idmembresia y si lo hay actualizar
+		//echo '<pre>'.var_export($objet, true).'</pre>';
+		$this->db->trans_start();
+		$this->db->set('bono', 5);
+		$this->db->set('patrocinador', $objet->patrocinador);
+		$this->db->set('idmembresia ', $objet->idmembresia);
+		$this->db->insert('bono_inicio_membresias');
 		$this->db->trans_complete();
         if ($this->db->trans_status() == FALSE) {
         	$this->db->trans_rollback();

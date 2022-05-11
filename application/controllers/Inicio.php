@@ -402,10 +402,7 @@ class Inicio extends CI_Controller {
         $is_logged = $this->session->userdata('is_logged_in');
         $data['result'] = 0;
         if (isset($is_logged) || $is_logged == true || isset($is_logged) == 1 || $is_logged != false || $is_logged != 0) {
-            
-			//$data['socio'] = $this->administracion_model->_get_data_socio_by_id($this->session->userdata('id'));
-			
-			$data['paquetes'] = $this->compras_model->_get_paquetes();
+
 			//echo '<pre>'.var_export($data['paquetes'], true).'</pre>';
             $data['provincias'] = $this->administracion_model->_get_provincias();
             $data['ciudades'] = $this->administracion_model->_get_ciudades();
@@ -496,7 +493,6 @@ class Inicio extends CI_Controller {
             $data['email'] = $this->input->post('email');
 			$data['cedula_patrocinador'] = $this->input->post('cedula_patrocinador');
 
-			$data['idpaquete'] = $this->input->post('idpaquete');
 
 			//Rol de socio
             $data['idrol'] = 3;
@@ -513,11 +509,7 @@ class Inicio extends CI_Controller {
 				$data['idtipo_cuenta'] = $this->input->post('tipo_cuenta');
 				$data['idbanco'] = $this->input->post('banco');
 			}
-
-			// if (isset($data['cedula_patrocinador']) && $data['cedula_patrocinador'] != NULL && $data['cedula_patrocinador'] != '') {
-			// 	$patrocinador = $this->administracion_model->_get_socio_by_cedula($data['cedula_patrocinador']);
-			// 	$data['patrocinador'] = $patrocinador->idsocio;
-			// }
+			
 			//Patrocinador
 			$data['patrocinador'] = $this->session->userdata('id');
 			$data['idpatrocinador'] = $this->administracion_model->_get_codigo_socio_by_id($data['patrocinador']);
