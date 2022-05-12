@@ -76,9 +76,8 @@
                     id="navbarDarkDropdownMenuLink" role="button" 
                     data-bs-toggle="dropdown" aria-expanded="false">Ayuda <strong>?</strong></a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                      <li><a class="dropdown-item" href="https://youtu.be/V5Fe566NNDM" target="_blank">Como inscribir un Nuevo Socio</a></li>
-                      <li><a class="dropdown-item" href="https://youtu.be/XdDyKmova00" target="_blank">Como realizar una compra</a></li>
-                      <li><a class="dropdown-item" href="https://youtu.be/jsPwI74P_II" target="_blank">Cómo ingresar al Backoffice</a></li>
+                      <li><a class="dropdown-item" href="https://youtu.be/jA9WgtFftyM" target="_blank">Como inscribir un Nuevo Socio</a></li>
+                      <li><a class="dropdown-item" href="https://youtu.be/1mgJI5dNgSc" target="_blank">Como realizar una compra</a></li>
 											<li><a class="dropdown-item" href="'.base_url().'images/GTK-Presentación.pdf" target="_blank">Instructivo PDF</a></li>
 											<li><a class="dropdown-item" href="http://www.gtk-ecuador.com">Ir a la web</a></li>
                     </ul>
