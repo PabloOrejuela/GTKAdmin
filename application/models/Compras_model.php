@@ -413,7 +413,7 @@ class Compras_model extends CI_Model {
 		} else {
 			$paquete = $this->_get_data_paquete($data['idpaquete']);
 			//echo '<pre>'.var_export($data, true).'</pre>';
-			$data['bono'] = (($paquete->paquete)/2) + ($this->MEMBRESIA/2);
+			$data['bono'] = (($paquete->paquete)/2);
 			$this->_set_bono($data);
 			return 1;
 		}

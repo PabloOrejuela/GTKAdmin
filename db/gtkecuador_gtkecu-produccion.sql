@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 11-05-2022 a las 17:29:56
+-- Tiempo de generación: 11-05-2022 a las 20:15:44
 -- Versión del servidor: 10.3.34-MariaDB
 -- Versión de PHP: 7.4.29
 
@@ -63,7 +63,9 @@ INSERT INTO `accesos` (`idacceso`, `fecha`, `pin`, `expira`, `idsocio`) VALUES
 (20, '2022-05-05 03:08:11', '917554', '1651720391', 1),
 (21, '2022-05-06 01:27:42', '721507', '1651800762', 1),
 (22, '2022-05-07 16:09:27', '270892', '1651940067', 2),
-(23, '2022-05-07 16:31:53', '327594', '1651941413', 2);
+(23, '2022-05-07 16:31:53', '327594', '1651941413', 2),
+(24, '2022-05-11 22:30:22', '252532', '1652308522', 2),
+(25, '2022-05-12 01:09:34', '286827', '1652318074', 2);
 
 -- --------------------------------------------------------
 
@@ -289,7 +291,8 @@ INSERT INTO `bono_inicio` (`idbono`, `bono`, `patrocinador`, `pagado`, `idcompra
 (6, '20.00', 4, 0, 10, '2022-05-04'),
 (7, '20.00', 8, 0, 13, '2022-05-04'),
 (8, '20.00', 8, 0, 14, '2022-05-04'),
-(9, '20.00', 4, 0, 15, '2022-05-05');
+(9, '20.00', 4, 0, 15, '2022-05-05'),
+(10, '155.00', 1, 0, 16, '2022-05-11');
 
 -- --------------------------------------------------------
 
@@ -969,7 +972,9 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('2d1e6fa06378a91ce538c56a28b69e5859b323c4', '164.163.160.61', 1652157110, 0x5f5f63695f6c6173745f726567656e65726174657c693a313635323135373131303b),
 ('2f6a1d3c9960c5696520ea3818f48975ad96c817', '196.196.169.112', 1652218406, 0x5f5f63695f6c6173745f726567656e65726174657c693a313635323231383430323b),
 ('7888a9b628ece0636d6fab3754794ceb45995226', '190.63.238.208', 1652304555, 0x5f5f63695f6c6173745f726567656e65726174657c693a313635323330343534313b),
-('2d4424832acc8094d010a46252f304c4fb5b5c07', '157.100.202.129', 1652307964, 0x5f5f63695f6c6173745f726567656e65726174657c693a313635323330373936343b);
+('2d4424832acc8094d010a46252f304c4fb5b5c07', '157.100.202.129', 1652308281, 0x5f5f63695f6c6173745f726567656e65726174657c693a313635323330383238313b757365727c733a31303a2231373035353230323237223b6e6f6d6272657c733a32343a2241444d494e4953545241444f522047544b45435541444f52223b70617373776f72647c733a33323a223838386162656336646332393236656534623638343237343533323735306262223b726f6c7c733a313a2231223b69647c733a313a2232223b69735f6c6f676765645f696e7c623a313b),
+('cd91aedfe60a61346ac31448f6b8e5a97d73dd17', '157.100.202.129', 1652308495, 0x5f5f63695f6c6173745f726567656e65726174657c693a313635323330383238313b757365727c733a31303a2231373035353230323237223b6e6f6d6272657c733a32343a2241444d494e4953545241444f522047544b45435541444f52223b70617373776f72647c733a33323a223838386162656336646332393236656534623638343237343533323735306262223b726f6c7c733a313a2231223b69647c733a313a2232223b69735f6c6f676765645f696e7c623a313b),
+('fff2b34b00b25bf2632294d974b0a998d0baccbb', '157.100.202.129', 1652318011, 0x5f5f63695f6c6173745f726567656e65726174657c693a313635323331373737313b757365727c733a31303a2231373035353230323237223b6e6f6d6272657c733a32343a2241444d494e4953545241444f522047544b45435541444f52223b70617373776f72647c733a33323a223838386162656336646332393236656534623638343237343533323735306262223b726f6c7c733a313a2231223b69647c733a313a2232223b69735f6c6f676765645f696e7c623a313b);
 
 -- --------------------------------------------------------
 
@@ -1003,7 +1008,8 @@ INSERT INTO `codigo_socio` (`id`, `codigo_socio`, `patrocinador`, `fecha_inscrip
 (8, 'TUN?A/U-8', 4, '2022-05-04', 8, 1, '2022-05-04 21:32:15', 0),
 (9, 'TUNHM/U-9', 8, '2022-05-04', 9, 1, '2022-05-04 23:57:30', 0),
 (10, 'TUNHM/U-10', 8, '2022-05-04', 10, 1, '2022-05-05 00:11:12', 0),
-(11, 'TUNDB/U-11', 4, '2022-05-05', 11, 1, '2022-05-05 14:09:45', 0);
+(11, 'TUNDB/U-11', 4, '2022-05-05', 11, 1, '2022-05-05 14:09:45', 0),
+(12, 'PCHJO/U-12', 2, '2022-05-11', 12, 1, '2022-05-11 22:33:11', 0);
 
 -- --------------------------------------------------------
 
@@ -1056,7 +1062,8 @@ INSERT INTO `compras` (`idcompras`, `id`, `fecha`, `primera`, `pago`, `idpaquete
 (12, 3, '2022-05-04', 0, 0, 2, '2022-05-04 23:54:50'),
 (13, 9, '2022-05-04', 1, 0, 1, '2022-05-04 23:57:30'),
 (14, 10, '2022-05-04', 1, 0, 1, '2022-05-05 00:11:12'),
-(15, 11, '2022-05-05', 1, 0, 1, '2022-05-05 14:09:45');
+(15, 11, '2022-05-05', 1, 0, 1, '2022-05-05 14:09:45'),
+(16, 2, '2022-05-11', 1, 0, 3, '2022-05-11 22:34:55');
 
 -- --------------------------------------------------------
 
@@ -1087,7 +1094,8 @@ INSERT INTO `cta_banco` (`idcuenta`, `idsocio`, `num_cta`, `idbanco`, `idtipo_cu
 (8, 8, '000000000', 163, 1),
 (9, 9, '000000000', 163, 1),
 (10, 10, '000000000', 163, 1),
-(11, 11, '000000000', 163, 1);
+(11, 11, '000000000', 163, 1),
+(12, 12, '000000000', 163, 1);
 
 -- --------------------------------------------------------
 
@@ -1135,7 +1143,8 @@ INSERT INTO `membresia` (`idmembresia`, `id`, `membresia`, `fecha`, `updated_at`
 (6, 8, '10.00', '2022-05-04', '2022-05-04', 0),
 (7, 9, '10.00', '2022-05-04', '2022-05-04', 0),
 (8, 10, '10.00', '2022-05-04', '2022-05-04', 0),
-(9, 11, '10.00', '2022-05-05', '2022-05-05', 0);
+(9, 11, '10.00', '2022-05-05', '2022-05-05', 0),
+(10, 12, '10.00', '2022-05-11', '2022-05-11', 0);
 
 -- --------------------------------------------------------
 
@@ -1361,7 +1370,8 @@ INSERT INTO `socios` (`idsocio`, `nombres`, `apellidos`, `cedula`, `clave_socio`
 (8, 'ÁNGEL ', 'AZAS', '1804859203', '84366c5e6b10f13c8ec6f2263f1c8487', 'azasangel32@gmail.com', 186, 'AMBATO', '', 3, 0, '2022-05-04 21:32:15'),
 (9, 'HUASCAR', 'MUNGABUSI', '18040299054', 'a43cd4185fd7f61cc9db892743200461', 'huascarmungabusi1117@gmail.com', 186, 'CHIBULEO', '0987666668', 3, 0, '2022-05-04 23:57:27'),
 (10, 'HUASCAR', 'MUNGABUSI', '1804029054', '634fcaffb6439200d8fc371b424e9e4d', 'huascarmungabusi1117@gmail.com', 186, 'CHIBULEO', '0987666668', 3, 0, '2022-05-05 00:11:12'),
-(11, 'DIANA ', 'BELTRAN ', '1804920484', 'f039e6392ee0b93af0547ac5efd19fcb', 'meganyaretzy29@gmail.com', 186, 'AMBATO', '0997163113', 3, 0, '2022-05-05 14:09:45');
+(11, 'DIANA ', 'BELTRAN ', '1804920484', 'f039e6392ee0b93af0547ac5efd19fcb', 'meganyaretzy29@gmail.com', 186, 'AMBATO', '0997163113', 3, 0, '2022-05-05 14:09:45'),
+(12, 'JUAN', 'OREJUELA', '1705520235', '08e984a379ee16b6f53d8d71c2f12673', 'jfco@gmail.com', 178, 'NNUU', '0972657925', 3, 0, '2022-05-11 22:33:11');
 
 -- --------------------------------------------------------
 
@@ -1622,7 +1632,7 @@ ALTER TABLE `tipo_cuenta`
 -- AUTO_INCREMENT de la tabla `accesos`
 --
 ALTER TABLE `accesos`
-  MODIFY `idacceso` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idacceso` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `agenda`
@@ -1640,7 +1650,7 @@ ALTER TABLE `banco`
 -- AUTO_INCREMENT de la tabla `bono_inicio`
 --
 ALTER TABLE `bono_inicio`
-  MODIFY `idbono` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idbono` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `bono_inicio_membresias`
@@ -1658,7 +1668,7 @@ ALTER TABLE `ciudad`
 -- AUTO_INCREMENT de la tabla `codigo_socio`
 --
 ALTER TABLE `codigo_socio`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `comisiones`
@@ -1670,13 +1680,13 @@ ALTER TABLE `comisiones`
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `idcompras` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idcompras` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `cta_banco`
 --
 ALTER TABLE `cta_banco`
-  MODIFY `idcuenta` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idcuenta` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `matrices`
@@ -1688,7 +1698,7 @@ ALTER TABLE `matrices`
 -- AUTO_INCREMENT de la tabla `membresia`
 --
 ALTER TABLE `membresia`
-  MODIFY `idmembresia` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idmembresia` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `motivacion`
@@ -1724,7 +1734,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `socios`
 --
 ALTER TABLE `socios`
-  MODIFY `idsocio` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idsocio` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `testimonios`
