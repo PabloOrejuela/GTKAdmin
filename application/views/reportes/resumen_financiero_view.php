@@ -75,16 +75,7 @@
 						7 => 3, 
 						8 => 2, 
 						9 => 2, 
-						10 => 1, 
-						11 => 1,
-						13 => 1,
-						14 => 1,
-						15 => 1,
-						16 => 1,
-						17 => 1,
-						18 => 1,
-						19 => 1,
-						20 => 1
+						10 => 1
 					);
 
 					if (isset($red_activos) && $red_activos != NULL) {
@@ -341,44 +332,77 @@
 							</tr>';
 						}
 	
-						if (count($red_activos) >= 5 && count($red_activos) < 6) {
+						if (count($red_activos) >= 5) {
 
 							//Niveles 8 y 9
 							$total = $puntos + $bono_inicio + $subtotal_primero + $subtotal_segundo 
 								+ $subtotal_tercero + $subtotal_cuarto + $subtotal_quinto + $subtotal_sexto 
-								+ $subtotal_septimo + $subtotal_octavo + $subtotal_noveno + $subtotal_decimo + $subtotal_decimo_primero;
+								+ $subtotal_septimo + $subtotal_octavo + $subtotal_noveno + $subtotal_decimo;
 
 							$total_puntos = $puntos + $puntos_primero + $puntos_segundo + $puntos_tercero
 								+ $puntos_cuarto + $puntos_quinto + $puntos_sexto + $puntos_septimo + $puntos_octavo + $puntos_noveno
-								+ $puntos_decimo + $puntos_decimo_primero;
+								+ $puntos_decimo;
 							
-							echo '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11';
+							echo '<tr>
+								<td><strong>1ro. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_primero.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_primero, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>2do. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_segundo.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_segundo, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>3er. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_tercero.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_tercero, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>4to. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_cuarto.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_cuarto, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>5to. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_quinto.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_quinto, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>6to. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_sexto.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_sexto, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>7mo. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_septimo.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_septimo, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>6to. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_octavo.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_octavo, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>7mo. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_noveno.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_noveno, 2) .'</td>
+								</tr>';
+							echo '<tr>
+									<td><strong>7mo. nivel:</strong></td>
+									<td style="text-align: right;">'.$puntos_decimo.'</td>
+									<td style="text-align: right;">$ '.number_format($subtotal_decimo, 2) .'</td>
+								</tr>';
+
+								//TOTAL
+							echo '<tr>
+									<td><strong>TOTAL:</strong></td>
+									<td style="text-align: right;"><strong>'.$total_puntos.'</strong></td>
+									<td style="text-align: right;"><strong>$ '.number_format($total, 2) .'</strong></td>
+								</tr>';
 						}
 	
-						if (count($red_activos) >= 6 && count($red_activos) < 7) {
-							
-							echo ', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13';
-						}
-	
-						if (count($red_activos) >= 7 && count($red_activos) < 8) {
-							
-							echo ', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15';
-						}
-	
-						if (count($red_activos) >= 8 && count($red_activos) < 9) {
-							
-							echo ', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17';
-						}
-	
-						if (count($red_activos) >= 9 && count($red_activos) < 10) {
-							
-							echo ', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19';
-						}
-	
-						if (count($red_activos) >= 10) {
-							
-							echo ', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20';
-						}
+						
 					}else{
 						echo '<tr>
 							<td><strong>Comisiones:</strong></td>
