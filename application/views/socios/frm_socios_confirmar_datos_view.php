@@ -36,7 +36,6 @@
                     <th>CEDULA</th>
 					<th>FECHA</th>
                     <th>CONFIRMAR</th>
-                    <th>CANCELAR</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,7 +48,7 @@
                             echo '<td>'.$value->cedula.'</td>';
 							echo '<td>'.$value->fecha.'</td>';
                             echo '<td>'.anchor('socios/confirma_pago_membresia/'.$value->idmembresia, '<i class="fa fa-check-circle-o" aria-hidden="true"> CONFIRMAR</i>', 'attributes').'</td>';
-                            echo '<td>'.anchor('socios/elimina_membresia/'.$value->idmembresia, '<span style="color:red;"><i class="fa fa-ban" aria-hidden="true"> CANCELAR</i>', 'attributes').'</span></td>';
+                            //echo '<td>'.anchor('socios/elimina_membresia/'.$value->idmembresia, '<span style="color:red;"><i class="fa fa-ban" aria-hidden="true"> CANCELAR</i>', 'attributes').'</span></td>';
                             echo '</tr>';
                         }
                     }else{

@@ -36,13 +36,10 @@
                     <th>CEDULA</th>
 					<th>FECHA</th>
                     <th>CONFIRMAR</th>
-                    <th>CANCELAR</th>
                 </tr>
             </thead>
             <tbody>
 				<tr>
-					<td></td>
-					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
