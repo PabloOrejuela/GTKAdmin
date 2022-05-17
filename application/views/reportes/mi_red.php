@@ -3,7 +3,7 @@
 		<table class="table table-light">
 			<tbody>
 				<tr>
-					<td id="td_resumen" colspan="2">
+					<td id="td_resumen">
 						<h3 style="text-align: left;font-weight: bold;vertical-align: middle;">Mi red</h3>
 					</td>
 					<td><img src="<?php echo base_url().'images/niveles/'.$socio->imagen; ?>.png" alt="zafiro" width="150"></td>
@@ -12,7 +12,7 @@
 					if (isset($nivel_1) && $nivel_1 != NULL) {
 						echo '<tr><td id="td_resumen"><strong>Primer Nivel</strong></td></tr>';
 						foreach ($nivel_1 as $value) {
-							echo '<tr><td>'.$value->id.'</td><td>'.$value->codigo_socio.'</td><td>'.$value->nombres.' '.$value->apellidos.'</td></tr>';
+							echo '<tr><td>'.$value->codigo_socio.'</td><td>'.$value->nombres.' '.$value->apellidos.'</td></tr>';
 						} 
 					}else {
 						echo '<tr><td id="td_resumen" colspan="2"><strong>Primer Nivel</strong></td>
@@ -25,7 +25,7 @@
 							if (isset($value)) {
 								foreach ($value as $v) {
 									if (isset($v) && $v !== NULL) {
-										echo '<tr><td>'.$v->id.'</td><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
 									}
 								}
 							}
@@ -38,7 +38,7 @@
 							if (isset($value)) {
 								foreach ($value as $v) {
 									if (isset($v) && $v !== NULL) {
-										echo '<tr><td>'.$v->id.'</td><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
 									}
 								}
 							}
@@ -51,7 +51,7 @@
 							if (isset($value)) {
 								foreach ($value as $v) {
 									if (isset($v) && $v !== NULL) {
-										echo '<tr><td>'.$v->id.'</td><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
 									}
 								}
 							}else{
@@ -67,7 +67,7 @@
 							if (isset($value)) {
 								foreach ($value as $v) {
 									if (isset($v) && $v !== NULL) {
-										echo '<tr><td>'.$v->id.'</td><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
 									}
 								}
 							}else{
@@ -77,12 +77,12 @@
 					}
 
 					if (isset($nivel_6[0]) && $nivel_6[0] != NULL) {
-						echo '<tr><td id="td_resumen"><strong>Quinto Nivel</strong></td></tr>';
+						echo '<tr><td id="td_resumen"><strong>Sexto Nivel</strong></td></tr>';
 						foreach ($nivel_6 as $value) {
 							if (isset($value)) {
 								foreach ($value as $v) {
 									if (isset($v) && $v !== NULL) {
-										echo '<tr><td>'.$v->id.'</td><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
 									}
 								}
 							}else{
@@ -92,12 +92,12 @@
 					}
 
 					if (isset($nivel_7[0]) && $nivel_7[0] != NULL) {
-						echo '<tr><td id="td_resumen"><strong>Quinto Nivel</strong></td></tr>';
+						echo '<tr><td id="td_resumen"><strong>Séptimo Nivel</strong></td></tr>';
 						foreach ($nivel_7 as $value) {
 							if (isset($value)) {
 								foreach ($value as $v) {
 									if (isset($v) && $v !== NULL) {
-										echo '<tr><td>'.$v->id.'</td><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
 									}
 								}
 							}else{
@@ -107,12 +107,42 @@
 					}
 
 					if (isset($nivel_8[0]) && $nivel_8[0] != NULL) {
-						echo '<tr><td id="td_resumen"><strong>Quinto Nivel</strong></td></tr>';
+						echo '<tr><td id="td_resumen"><strong>Octavo Nivel</strong></td></tr>';
 						foreach ($nivel_8 as $value) {
 							if (isset($value)) {
 								foreach ($value as $v) {
 									if (isset($v) && $v !== NULL) {
-										echo '<tr><td>'.$v->id.'</td><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+									}
+								}
+							}else{
+								echo '<tr><td colspan="3">No hay socios en este nivel</td></tr>';
+							}
+						}
+					}
+
+					if (isset($nivel_9[0]) && $nivel_9[0] != NULL) {
+						echo '<tr><td id="td_resumen"><strong>Noveno Nivel</strong></td></tr>';
+						foreach ($nivel_9 as $value) {
+							if (isset($value)) {
+								foreach ($value as $v) {
+									if (isset($v) && $v !== NULL) {
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
+									}
+								}
+							}else{
+								echo '<tr><td colspan="3">No hay socios en este nivel</td></tr>';
+							}
+						}
+					}
+
+					if (isset($nivel_10[0]) && $nivel_10[0] != NULL) {
+						echo '<tr><td id="td_resumen"><strong>Décimo Nivel</strong></td></tr>';
+						foreach ($nivel_10 as $value) {
+							if (isset($value)) {
+								foreach ($value as $v) {
+									if (isset($v) && $v !== NULL) {
+										echo '<tr><td>'.$v->codigo_socio.'</td><td>'.$v->nombres.' '.$v->apellidos.'</td></tr>';
 									}
 								}
 							}else{
