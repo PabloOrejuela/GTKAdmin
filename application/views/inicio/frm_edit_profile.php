@@ -110,9 +110,12 @@
 						<select name="tipo_cuenta" class="form-select form-control" id="tipo_cuenta">
 							<?php 
 								if ($socio[0]->idtipo_cuenta == 1) {
-									echo '<option value="1">AHORROS</option>';
-								}else{
+									echo '<option value="1" selected>AHORROS</option>';
 									echo '<option value="2">CORRIENTE</option>';
+								}else{
+									echo '<option value="1">AHORROS</option>';
+									echo '<option value="2" selected>CORRIENTE</option>';
+									
 								}
 							?>
 						</select>
